@@ -1,15 +1,24 @@
 {
     "private": true,
     "scripts": {
-        "prepare": "husky install"
+        "dev": "vitepress dev",
+        "prepare": "husky install",
+        "build": "vitepress build"
     },
     "engines": {
-        "node": ">=12.0.0",
-        "npm": ">=7.0.0"
+        "node": ">=14.0.0",
+        "npm": ">=8.0.0"
     },
     "devDependencies": {
-        "@commitlint/cli": "^15.0.0",
-        "@commitlint/config-conventional": "^15.0.0",
-        "husky": "^7.0.4"
+        "@commitlint/cli": "^17.0.3",
+        "@commitlint/config-conventional": "^17.0.3",
+        "husky": "^8.0.1"
+    },
+    "dependencies": {
+        "@magnesium/shape": "^1.8.1",
+        "@magnesium/theme": "^1.8.1",
+        "@magnesium/typography": "^1.8.1",
+        "vitepress": "^1.0.0-alpha.4",
+        "vue": "^3.2.37"
     }
 }
