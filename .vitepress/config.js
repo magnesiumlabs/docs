@@ -5,6 +5,33 @@ module.exports = {
     themeConfig: {
         nav: [
             {
+                text: 'Docs',
+                items: [
+                    {
+                        text: 'Core',
+                        items: [
+                            {
+                                text: 'Theme',
+                                link: 'guide/theme/getting-started'
+                            },
+                            {
+                                text: 'Typography',
+                                link: 'guide/typography/getting-started'
+                            }
+                        ]
+                    },
+                    {
+                        text: 'Advanced',
+                        items: [
+                            {
+                                text: 'Shape',
+                                link: 'guide/shape/getting-started'
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
                 text: '1.x',
                 items: [
                     {
@@ -47,6 +74,30 @@ module.exports = {
                         {
                             text: 'Mixins',
                             link: 'guide/theme/api/mixins'
+                        }
+                    ]
+                }
+            ],
+            '/guide/typography/': [
+                {
+                    text: 'Typography',
+                    collapsible: true,
+                    items: [
+                        {
+                            text: 'Getting Started',
+                            link: 'guide/typography/getting-started'
+                        }
+                    ]
+                }
+            ],
+            '/guide/shape/': [
+                {
+                    text: 'Shape',
+                    collapsible: true,
+                    items: [
+                        {
+                            text: 'Getting Started',
+                            link: 'guide/typography/getting-started'
                         }
                     ]
                 }
