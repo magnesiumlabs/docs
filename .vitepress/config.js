@@ -1,5 +1,10 @@
 module.exports = {
     title: 'Magnesium',
+    head: [
+        [
+            'script', { src: 'https://www.googletagmanager.com/gtag/js?id=G-FENS3716B9', async }
+        ]
+    ],
     description: 'Just playing around.',
     srcDir: 'src/',
     themeConfig: {
