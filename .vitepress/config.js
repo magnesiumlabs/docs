@@ -20,24 +20,37 @@ module.exports = {
                 link: 'https://github.com/magnesiumlabs/magnesium'
             }
         ],
-        sidebar: [
-            {
-                text: 'Components',
-                items: [
-                    {
-                        text: 'Shape',
-                        link: 'guide/shape'
-                    },
-                    {
-                        text: 'Theme',
-                        link: 'guide/theme'
-                    },
-                    {
-                        text: 'Typography',
-                        link: 'guide/typography'
-                    }
-                ]
-            }
-        ]
+        sidebar: {
+            '/guide/theme/': [
+                {
+                    text: 'Theme',
+                    collapsible: true,
+                    items: [
+                        {
+                            text: 'Getting Started',
+                            link: 'guide/theme/getting-started'
+                        },
+                        {
+                            text: 'Configuration',
+                            link: 'guide/theme/configuration'
+                        }
+                    ]
+                },
+                {
+                    text: 'API',
+                    collapsible: true,
+                    items: [
+                        {
+                            text: 'Functions',
+                            link: 'guide/theme/api/functions'
+                        },
+                        {
+                            text: 'Mixins',
+                            link: 'guide/theme/api/mixins'
+                        }
+                    ]
+                }
+            ]
+        }
     }
 };
