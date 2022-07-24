@@ -77,7 +77,7 @@ Sets default CSS custom properties value with fallback.
 }
 ```
 
-## `prefers-color-scheme($scheme)`
+## `prefers-color-scheme($scheme, $tokens: (), $root: false)`
 
 Sets `prefers-color-scheme()` media feature for `light` or `dark` system mode.
 
@@ -87,15 +87,11 @@ Sets `prefers-color-scheme()` media feature for `light` or `dark` system mode.
 @use "@magnesium/theme";
 
 @include theme.prefers-color-scheme {
-    :root {
-        --mg-theme-primary: #2674a2;
-    }
+    --mg-theme-primary: #2674a2;
 }
 
 @include theme.prefers-color-scheme(dark) {
-    :root {
-        --mg-theme-primary: #6e5898;
-    }
+    --mg-theme-primary: #6e5898;
 }
 ```
 
@@ -111,6 +107,58 @@ Sets `prefers-color-scheme()` media feature for `light` or `dark` system mode.
 @media (prefers-color-scheme: dark) {
     :root {
         --mg-theme-primary: #6e5898;
+    }
+}
+```
+
+### `$tokens` map
+
+You can use a `$tokens` map to more easily manage the color system tokens.
+
+#### Sass
+
+```scss
+@use "@magnesium/theme";
+
+@include theme.prefers-color-scheme($tokens: (
+    primary: #080,
+    secondary: #800
+));
+```
+
+#### CSS
+
+```css
+@media (prefers-color-scheme: light) {
+    :root {
+        --mg-theme-primary: #080;
+        --mg-theme-secondary: #800;
+    }
+}
+```
+
+### Custom selector
+
+You can disable `:root` option and use you own selector.
+
+#### Sass
+
+```scss
+@use "@magnesium/theme";
+
+@include theme.prefers-color-scheme($root: false) {
+    .foo {
+        --mg-theme-primary: #2674a2;
+    }
+}
+```
+
+#### CSS
+
+```css
+@media (prefers-color-scheme: light) {
+    .foo {
+        --mg-theme-primary: #2674a2;
     }
 }
 ```
