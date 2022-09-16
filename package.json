@@ -12,12 +12,7 @@
     "devDependencies": {
         "@commitlint/cli": "^17.1.2",
         "@commitlint/config-conventional": "^17.1.0",
-        "husky": "^8.0.1"
-    },
-    "dependencies": {
-        "@magnesium/shape": "^1.8.1",
-        "@magnesium/theme": "^1.8.1",
-        "@magnesium/typography": "^1.8.1",
+        "husky": "^8.0.1",
         "vitepress": "^1.0.0-alpha.15",
         "vue": "^3.2.39"
     }
