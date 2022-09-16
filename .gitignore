@@ -5,4 +5,5 @@
 ## Folders
 .DS_Store
 /.idea
+/.vitepress/dist
 /node_modules
