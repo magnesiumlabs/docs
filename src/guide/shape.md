@@ -2,4 +2,16 @@
 outline: deep
 ---
 
-<!-- @include: ../../node_modules/@magnesium/shape/README.md -->
+# @magnesium/shape
+
+The Magnesium Design shape system help you to create a shape who reflects your design or style.
+
+## Installing
+
+```shell
+npm install @magnesium/shape
+```
+
+## Usage
+
+_Coming soon..._

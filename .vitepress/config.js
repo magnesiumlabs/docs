@@ -13,31 +13,9 @@ module.exports = {
     themeConfig: {
         nav: [
             {
-                text: 'Docs',
-                items: [
-                    {
-                        text: 'Core',
-                        items: [
-                            {
-                                text: 'Theme',
-                                link: 'guide/theme/getting-started'
-                            },
-                            {
-                                text: 'Typography',
-                                link: 'guide/typography/getting-started'
-                            }
-                        ]
-                    },
-                    {
-                        text: 'Advanced',
-                        items: [
-                            {
-                                text: 'Shape',
-                                link: 'guide/shape/getting-started'
-                            }
-                        ]
-                    }
-                ]
+                text: 'Guide',
+                link: 'guide/getting-started',
+                activeMatch: '/guide/'
             },
             {
                 text: '1.x',
@@ -56,60 +34,50 @@ module.exports = {
             }
         ],
         sidebar: {
-            '/guide/theme/': [
+            '/guide/': [
                 {
-                    text: 'Theme',
+                    text: 'Introduction',
                     collapsible: true,
                     items: [
                         {
                             text: 'Getting Started',
-                            link: 'guide/theme/getting-started'
-                        },
-                        {
-                            text: 'Configuration',
-                            link: 'guide/theme/configuration'
+                            link: 'guide/getting-started'
                         }
                     ]
                 },
                 {
-                    text: 'API',
+                    text: 'Core',
                     collapsible: true,
                     items: [
                         {
-                            text: 'Functions',
-                            link: 'guide/theme/api/functions'
+                            text: '@magnesium/core',
+                            link: 'guide/core'
                         },
                         {
-                            text: 'Mixins',
-                            link: 'guide/theme/api/mixins'
+                            text: '@magnesium/theme',
+                            link: 'guide/theme'
+                        },
+                        {
+                            text: '@magnesium/typography',
+                            link: 'guide/typography'
                         }
                     ]
-                }
-            ],
-            '/guide/typography/': [
+                },
                 {
-                    text: 'Typography',
+                    text: 'Advanced',
                     collapsible: true,
                     items: [
                         {
-                            text: 'Getting Started',
-                            link: 'guide/typography/getting-started'
-                        }
-                    ]
-                }
-            ],
-            '/guide/shape/': [
-                {
-                    text: 'Shape',
-                    collapsible: true,
-                    items: [
-                        {
-                            text: 'Getting Started',
-                            link: 'guide/typography/getting-started'
+                            text: '@magnesium/shape',
+                            link: 'guide/shape'
                         }
                     ]
                 }
             ]
+        },
+        footer: {
+            message: 'Released under the MIT License.',
+            copyright: 'Copyright © 2022-present'
         }
     }
 };
