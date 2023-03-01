@@ -3,8 +3,8 @@ layout: home
 
 hero:
     name: Magnesium
-    text: The Sass Framework for Design System.
-    tagline: The Sass Framework for Design System.
+    text: The Sass Design System Framework
+    tagline: Simple, powerful and performant.
     actions:
         - theme: brand
           text: Get Started
@@ -12,15 +12,4 @@ hero:
         - theme: alt
           text: View on GitHub
           link: https://github.com/magnesiumlabs/magnesium
-
-features:
-    - icon: 📦
-      title: Theme
-      details: Easily manage your theme colors.
-    - icon: 📦
-      title: Typography
-      details: Easily manage your typography rules.
-    - icon: 📦 
-      title: Shape
-      details: Easily manage your theme shape.
 ---

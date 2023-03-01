@@ -50,16 +50,8 @@ module.exports = {
                     collapsible: true,
                     items: [
                         {
-                            text: '@magnesium/core',
-                            link: 'guide/core'
-                        },
-                        {
-                            text: '@magnesium/theme',
+                            text: 'Theme',
                             link: 'guide/theme'
-                        },
-                        {
-                            text: '@magnesium/typography',
-                            link: 'guide/typography'
                         }
                     ]
                 },
@@ -68,7 +60,11 @@ module.exports = {
                     collapsible: true,
                     items: [
                         {
-                            text: '@magnesium/shape',
+                            text: 'Color',
+                            link: 'guide/color'
+                        },
+                        {
+                            text: 'Shape',
                             link: 'guide/shape'
                         }
                     ]
