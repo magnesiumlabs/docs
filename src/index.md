@@ -3,7 +3,7 @@ layout: home
 
 hero:
     name: Magnesium
-    text:
+    text: The Sass Framework for Design System.
     tagline: The Sass Framework for Design System.
     actions:
         - theme: brand
