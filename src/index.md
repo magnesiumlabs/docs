@@ -2,14 +2,25 @@
 layout: home
 
 hero:
-    name: Magnesium
-    text: The Sass Design System Framework
-    tagline: Simple, powerful and performant.
-    actions:
-        - theme: brand
-          text: Get Started
-          link: /guide/theme/getting-started
-        - theme: alt
-          text: View on GitHub
-          link: https://github.com/magnesiumlabs/magnesium
+  name: "Magnesium"
+  text: "The Sass Framework for Web Design System."
+  tagline: "Simple, powerful and performant."
+  actions:
+    - theme: brand
+      text: Get Started
+      link: /guide/getting-started
+    - theme: alt
+      text: View on GitHub
+      link: https://github.com/magnesiumlabs/magnesium
+
+features:
+  - icon: 🪬
+    title: Focus on Your Theme
+    details: Stay concentrate on your theme and this evolution.
+  - icon: 🚂
+    title: Full Custom Properties
+    details: Easily generate custom properties from Sass map.
+  - icon: 🚀
+    title: Develop Themes Quickly
+    details: Easily and fast create theme for evolving your app faster.
 ---

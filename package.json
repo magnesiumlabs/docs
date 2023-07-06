@@ -2,6 +2,7 @@
     "private": true,
     "scripts": {
         "dev": "vitepress dev",
+        "preview": "vitepress preview",
         "prepare": "husky install",
         "build": "vitepress build"
     },
@@ -13,7 +14,7 @@
         "@commitlint/cli": "^17.4.4",
         "@commitlint/config-conventional": "^17.4.4",
         "husky": "^8.0.3",
-        "vitepress": "^1.0.0-alpha.49",
+        "vitepress": "^1.0.0-beta.5",
         "vue": "^3.2.47"
     }
 }
