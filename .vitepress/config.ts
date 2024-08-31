@@ -13,14 +13,31 @@ export default defineConfig({
         ]
     ],
     themeConfig: {
-        logo: '/logo.svg',
+        logo: {
+            light: '/logo.svg',
+            dark: '/logo-white.svg'
+        },
+        siteTitle: false,
         search: {
             provider: 'local'
         },
         nav: [
             {
+                text: 'Home',
+                link: '/'
+            },
+            {
                 text: 'Guide',
                 link: '/guide/getting-started'
+            },
+            {
+                text: '4.4.0',
+                items: [
+                    {
+                        text: 'Changelog',
+                        link: 'https://github.com/magnesiumlabs/magnesium/blob/main/CHANGELOG.md'
+                    }
+                ]
             }
         ],
         sidebar: [

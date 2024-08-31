@@ -3,15 +3,12 @@ layout: home
 
 hero:
   name: "Magnesium"
-  text: "The Sass Framework for Web Design System."
+  text: "Sass Framework for Web Design System."
   tagline: "Simple, powerful and performant."
   actions:
     - theme: brand
       text: Get Started
       link: /guide/getting-started
-    - theme: alt
-      text: View on GitHub
-      link: https://github.com/magnesiumlabs/magnesium
 
 features:
   - icon: 🪬
