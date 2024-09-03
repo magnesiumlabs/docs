@@ -6,6 +6,13 @@ export default defineConfig({
     srcDir: 'src/',
     head: [
         [
+            'link',
+            {
+                rel: 'icon',
+                href: '/favicon.ico'
+            }
+        ],
+        [
             'script',
             {
                 src: 'https://www.googletagmanager.com/gtag/js?id=G-FENS3716B9'
