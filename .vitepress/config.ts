@@ -77,6 +77,19 @@ export default defineConfig({
                         link: 'guide/mixins'
                     }
                 ]
+            },
+            {
+                text: 'Components',
+                items: [
+                    {
+                        text: 'Color',
+                        link: 'guide/components/color'
+                    },
+                    {
+                        text: 'Shape',
+                        link: 'guide/components/shape'
+                    }
+                ]
             }
         ],
         socialLinks: [
