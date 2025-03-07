@@ -30,10 +30,11 @@ Override the theme custom property with the `theme()` mixin.
 
 ### Usage
 
+::: code-group
 ```scss
 @use "@magnesium/theme/shape";
 
-:root {
+.foo {
     @include shape.theme((
         "small": 6px,
         "medium": 10px
@@ -41,11 +42,10 @@ Override the theme custom property with the `theme()` mixin.
 }
 ```
 
-#### Returns
-
-```scss
-:root {
+```css
+.foo {
     --mg-shape-small: 6px;
     --mg-shape-medium: 10px;
 }
 ```
+:::

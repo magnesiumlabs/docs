@@ -17,6 +17,7 @@ Emits CSS variable declaration from a user-provided theme's.
 
 #### Usage
 
+::: code-group
 ```scss
 @use "@magnesium/theme";
 
@@ -29,19 +30,34 @@ $theme: (
 }
 ```
 
-#### Returns
-
-```scss
+```css
 .foo {
     color: var(--mg-button-text-color);
 }
+```
+:::
 
-// ...or with fallback option at `true`...
+With `fallback`:
 
+::: code-group
+```scss
+@use "@magnesium/theme";
+
+$theme: (
+    "text-color": darkcyan
+);
+
+.foo {
+    color: theme.emit-variable($theme, "text-color", true, "button");
+}
+```
+
+```css
 .foo {
     color: var(--mg-button-text-color, darkcyan);
 }
 ```
+::: 
 
 ## `create-theme-vars($theme, $prefix)`
 

@@ -30,10 +30,11 @@ Override the theme custom property with the `theme()` mixin.
 
 ### Usage
 
+::: code-group
 ```scss
 @use "@magnesium/theme/color";
 
-:root {
+.foo {
     @include color.theme((
         "primary": darkcyan,
         "secondary": darkorange
@@ -41,11 +42,10 @@ Override the theme custom property with the `theme()` mixin.
 }
 ```
 
-#### Returns
-
-```scss
-:root {
+```css
+.foo {
     --mg-color-primary: darkcyan;
     --mg-color-secondary: darkorange;
 }
 ```
+:::

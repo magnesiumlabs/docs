@@ -4,12 +4,19 @@
 
 Add Magnesium as dependencies for your project.
 
-```shell
+::: code-group
+```bash [npm]
 npm install @magnesium/theme
 ```
+:::
+
+## Try
+
+Try it on [StackBlitz](https://stackblitz.com/edit/stackblitz-starters-msdndysd?file=app.scss).
 
 ## Usage
 
+::: code-group
 ```scss
 @use "@magnesium/theme";
 
@@ -22,10 +29,9 @@ $theme: (
 }
 ```
 
-### Result
-
 ```css
 .foo {
     --mg-button-text-color: darkcyan;
 }
 ```
+:::

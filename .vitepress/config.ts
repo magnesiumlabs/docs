@@ -38,7 +38,7 @@ export default defineConfig({
                 link: '/guide/getting-started'
             },
             {
-                text: '4.4.0',
+                text: '4.5.x',
                 items: [
                     {
                         text: 'Changelog',

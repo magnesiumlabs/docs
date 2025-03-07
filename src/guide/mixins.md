@@ -15,6 +15,7 @@ Emits CSS custom properties declarations from a user-provided theme's.
 
 #### Usage
 
+::: code-group
 ```scss
 @use "@magnesium/theme";
 
@@ -27,13 +28,12 @@ $theme: (
 }
 ```
 
-#### Returns
-
-```scss
+```css
 .foo {
     --mg-button-text-color: darkcyan;
 }
 ```
+:::
 
 ## `emit-color-scheme($scheme)`
 
@@ -47,25 +47,25 @@ Emits CSS media feature `prefers-color-scheme` declarations.
 
 #### Usage
 
+::: code-group
 ```scss
 @use "@magnesium/theme";
 
 @include theme.emit-color-scheme("light") {
-    :root {
+    .foo {
         --mg-button-text-color: darkcyan;
     }
 }
 ```
 
-#### Returns
-
-```scss
+```css
 @media (prefers-color-scheme: light) {
-    :root {
+    .foo {
         --mg-button-text-color: darkcyan;
     }
 }
 ```
+:::
 
 ## `emit-theme-vars($theme)`
 
@@ -79,6 +79,7 @@ Emits CSS media feature `prefers-color-scheme` declarations.
 
 #### Usage
 
+::: code-group
 ```scss
 @use "@magnesium/theme";
 
@@ -93,10 +94,9 @@ $theme: theme.create-theme-vars($theme, "button");
 }
 ```
 
-#### Returns
-
-```scss
+```css
 .foo {
     --mg-button-text-color: darkcyan;
 }
 ```
+:::
