@@ -9,6 +9,9 @@ hero:
     - theme: brand
       text: Get Started
       link: /guide/getting-started
+    - theme: alt
+      text: Github
+      link: https://github.com/magnesiumlabs/magnesium
 
 features:
   - icon: 🪬
