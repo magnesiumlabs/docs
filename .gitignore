@@ -1,5 +1,6 @@
 ## Files
 *.orig
+*.local.json
 *.log
 
 ## Folders

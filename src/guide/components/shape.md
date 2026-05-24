@@ -1,51 +1,21 @@
-# Shape
+::: warning Deprecated
+This page documents the `@magnesium/theme/shape` sub-module from v4, removed in v5.
 
-The shape component will help you to easily define your custom theme shapes.
-
-## Options
-
-Use the global `$shape` parameter to configure shape schemes.
-
-| Option   | Type     | Description                                                                         | Default |
-|----------|----------|-------------------------------------------------------------------------------------|---------|
-| `prefix` | `string` | Update shape prefix name on any custom properties.                                  | `shape` |
-| `tokens` | `map`    | Add map of shape tokens. Needed for tokens validation when `theme()` mixin is used. | `()`    |
-
-#### Example
+Shape tokens are now managed directly with `emit()` and a `"shape"` namespace:
 
 ```scss
-@use "@magnesium/theme" with (
-    $shape: (
-        "tokens": (
-            "small",
-            "medium"
-        )
-    )
+@use "@magnesium/theme";
+
+$shape-tokens: (
+    "small": 4px,
+    "medium": 8px,
+    "large": 16px
 );
-```
 
-## Theme
-
-Override the theme custom property with the `theme()` mixin.
-
-### Usage
-
-::: code-group
-```scss
-@use "@magnesium/theme/shape";
-
-.foo {
-    @include shape.theme((
-        "small": 6px,
-        "medium": 10px
-    ));
+:root {
+    @include theme.emit($shape-tokens, "shape");
 }
 ```
 
-```css
-.foo {
-    --mg-shape-small: 6px;
-    --mg-shape-medium: 10px;
-}
-```
+See [Patterns](../patterns#global-token-layer) for a full example.
 :::

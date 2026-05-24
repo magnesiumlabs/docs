@@ -1,51 +1,20 @@
-# Color
+::: warning Deprecated
+This page documents the `@magnesium/theme/color` sub-module from v4, removed in v5.
 
-The color component will help you to easily define your custom theme colors.
-
-## Options
-
-Use the global `$color` parameter to configure color schemes.
-
-| Option   | Type     | Description                                                                         | Default |
-|----------|----------|-------------------------------------------------------------------------------------|---------|
-| `prefix` | `string` | Update color prefix name on any custom properties.                                  | `color` |
-| `tokens` | `map`    | Add map of color tokens. Needed for tokens validation when `theme()` mixin is used. | `()`    |
-
-#### Example
+Color tokens are now managed directly with `emit()` and a `"color"` namespace:
 
 ```scss
-@use "@magnesium/theme" with (
-    $color: (
-        "tokens": (
-            "primary",
-            "secondary"
-        )
-    )
+@use "@magnesium/theme";
+
+$color-tokens: (
+    "primary": #0071d7,
+    "secondary": darkorange
 );
-```
 
-## Theme
-
-Override the theme custom property with the `theme()` mixin.
-
-### Usage
-
-::: code-group
-```scss
-@use "@magnesium/theme/color";
-
-.foo {
-    @include color.theme((
-        "primary": darkcyan,
-        "secondary": darkorange
-    ));
+:root {
+    @include theme.emit($color-tokens, "color");
 }
 ```
 
-```css
-.foo {
-    --mg-color-primary: darkcyan;
-    --mg-color-secondary: darkorange;
-}
-```
+See [Patterns](../patterns#global-token-layer) for a full example.
 :::

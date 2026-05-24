@@ -3,8 +3,8 @@ layout: home
 
 hero:
   name: "Magnesium"
-  text: "Sass Framework for Web Design System."
-  tagline: "Simple, powerful and performant."
+  text: "A Sass toolkit for design tokens."
+  tagline: "Stateless. Explicit. Composable."
   actions:
     - theme: brand
       text: Get Started
@@ -14,13 +14,13 @@ hero:
       link: https://github.com/magnesiumlabs/magnesium
 
 features:
-  - icon: 🪬
-    title: Focus on Your Theme
-    details: Stay concentrate on your theme and this evolution.
-  - icon: 🚂
-    title: Full Custom Properties
-    details: Easily generate custom properties from Sass map.
-  - icon: 🚀
-    title: Develop Themes Quickly
-    details: Easily and fast create theme for evolving your app faster.
+  - icon: 🎨
+    title: Token-first
+    details: Define design tokens as plain Sass maps. Emit them as scoped, prefixed CSS custom properties with a single call.
+  - icon: ⚡
+    title: Fully stateless
+    details: No module-level side effects. Every function and mixin is self-contained — prefix and namespace are always explicit.
+  - icon: 🏗️
+    title: Cascade layer ready
+    details: Wrap any token emission in a named @layer out of the box, for full control over the CSS cascade.
 ---

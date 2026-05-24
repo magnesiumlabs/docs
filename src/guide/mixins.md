@@ -1,17 +1,22 @@
 # Mixins
 
-The Magnesium mixins help you to easily manage theme styles from ,user-provided theme's tokens map.
+## `emit($tokens, $namespace, $include, $exclude, $layer)`
 
-## `emit-custom-props($theme, $prefix)`
+Emits CSS custom property declarations from a tokens map. Nested maps are flattened recursively.
 
-Emits CSS custom properties declarations from a user-provided theme's.
+::: info Null vs falsy
+`null` values are **silently skipped** — no custom property is emitted. Falsy values such as `0`, `0px`, or `false` are emitted as-is, since they are valid CSS values.
+:::
 
 #### Parameters
 
-| Parameter | Description                                                           | Default     |
-|-----------|-----------------------------------------------------------------------|-------------|
-| `$theme`  | The reference theme's tokens map.                                     | `undefined` |
-| `$prefix` | Token's prefix name to prepend for each token's custom property name. | `null`      |
+| Parameter    | Description                                              | Default |
+|--------------|----------------------------------------------------------|---------|
+| `$tokens`    | The tokens map.                                          | —       |
+| `$namespace` | Namespace to prepend (without prefix).                   | `null`  |
+| `$include`   | List of token keys to emit. All others are skipped.      | `null`  |
+| `$exclude`   | List of token keys to skip.                              | `null`  |
+| `$layer`     | CSS cascade layer name. Wraps output in `@layer`.        | `null`  |
 
 #### Usage
 
@@ -19,31 +24,113 @@ Emits CSS custom properties declarations from a user-provided theme's.
 ```scss
 @use "@magnesium/theme";
 
-$theme: (
-    "text-color": darkcyan
+$tokens: (
+    "text-color": darkcyan,
+    "font-size": 1rem
 );
 
-.foo {
-    @include theme.emit-custom-props($theme, "button");
+:root {
+    @include theme.emit($tokens, "button");
 }
 ```
 
 ```css
-.foo {
+:root {
+    --mg-button-text-color: darkcyan;
+    --mg-button-font-size: 1rem;
+}
+```
+:::
+
+#### Filtering with `$include` / `$exclude`
+
+::: code-group
+```scss
+:root {
+    @include theme.emit($tokens, "button", $include: ("text-color"));
+}
+```
+
+```css
+:root {
     --mg-button-text-color: darkcyan;
 }
 ```
 :::
 
-## `emit-color-scheme($scheme)`
+When both are provided, `$exclude` applies on top of `$include` — a key must be in `$include` **and** not in `$exclude` to be emitted:
 
-Emits CSS media feature `prefers-color-scheme` declarations.
+::: code-group
+```scss
+@include theme.emit((
+    "primary": blue,
+    "secondary": coral,
+    "accent": gold,
+    "muted": gray
+), "color", $include: ("primary", "accent", "muted"), $exclude: ("muted",));
+```
+
+```css
+--mg-color-primary: blue;
+--mg-color-accent: gold;
+/* "muted" is excluded despite being in $include */
+```
+:::
+
+#### Cascade layers with `$layer`
+
+::: code-group
+```scss
+@include theme.emit($tokens, "button", $layer: "tokens");
+```
+
+```css
+@layer tokens {
+    --mg-button-text-color: darkcyan;
+    --mg-button-font-size: 1rem;
+}
+```
+:::
+
+#### Nested maps
+
+::: code-group
+```scss
+$tokens: (
+    "padding": (
+        "top": 12px,
+        "bottom": 8px
+    )
+);
+
+:root {
+    @include theme.emit($tokens, "button");
+}
+```
+
+```css
+:root {
+    --mg-button-padding-top: 12px;
+    --mg-button-padding-bottom: 8px;
+}
+```
+:::
+
+---
+
+## `theme($refs, $tokens, $namespace, $include, $exclude)`
+
+Validates user-provided tokens against a reference schema, then emits the custom property declarations in one call. Throws `@error` on unknown tokens.
 
 #### Parameters
 
-| Parameter | Description                                         | Default |
-|-----------|-----------------------------------------------------|---------|
-| `$scheme` | The color scheme. Choose between `light` or `dark`. | `light` |
+| Parameter    | Description                                               | Default |
+|--------------|-----------------------------------------------------------|---------|
+| `$refs`      | Reference schema — a map or list of supported token keys. | —       |
+| `$tokens`    | The user-provided tokens map.                             | —       |
+| `$namespace` | Namespace to prepend (without prefix).                    | `null`  |
+| `$include`   | List of token keys to emit.                               | `null`  |
+| `$exclude`   | List of token keys to skip.                               | `null`  |
 
 #### Usage
 
@@ -51,52 +138,70 @@ Emits CSS media feature `prefers-color-scheme` declarations.
 ```scss
 @use "@magnesium/theme";
 
-@include theme.emit-color-scheme("light") {
-    .foo {
-        --mg-button-text-color: darkcyan;
+$refs: (
+    "text-color": darkcyan,
+    "font-size": 1rem
+);
+
+.foo {
+    @include theme.theme($refs, ("text-color": darkorange), "button");
+}
+```
+
+```css
+.foo {
+    --mg-button-text-color: darkorange;
+}
+```
+:::
+
+---
+
+## `scheme($scheme, $selector)`
+
+Scopes content to a color scheme. Without `$selector`, wraps in a `@media (prefers-color-scheme)` query. With `$selector`, wraps in a selector rule instead.
+
+#### Parameters
+
+| Parameter   | Description                                                              | Default   |
+|-------------|--------------------------------------------------------------------------|-----------|
+| `$scheme`   | The color scheme: `"light"` or `"dark"`.                                 | `"light"` |
+| `$selector` | A CSS selector to scope content. Bypasses the media query when provided. | `null`    |
+
+#### Usage — media query
+
+::: code-group
+```scss
+@use "@magnesium/theme";
+
+@include theme.scheme("dark") {
+    :root {
+        --mg-color-primary: darkorange;
     }
 }
 ```
 
 ```css
-@media (prefers-color-scheme: light) {
-    .foo {
-        --mg-button-text-color: darkcyan;
+@media (prefers-color-scheme: dark) {
+    :root {
+        --mg-color-primary: darkorange;
     }
 }
 ```
 :::
 
-## `emit-theme-vars($theme)`
-
-Emits CSS media feature `prefers-color-scheme` declarations.
-
-#### Parameters
-
-| Parameter | Description                                         | Default |
-|-----------|-----------------------------------------------------|---------|
-| `$scheme` | The color scheme. Choose between `light` or `dark`. | `light` |
-
-#### Usage
+#### Usage — explicit selector
 
 ::: code-group
 ```scss
-@use "@magnesium/theme";
-
-$theme: (
-    "text-color": darkcyan
-);
-
-$theme: theme.create-theme-vars($theme, "button");
-
-.foo {
-    @include theme.emit-theme-vars($theme);
+@include theme.scheme("dark", $selector: "[data-theme='dark']") {
+    --mg-color-primary: darkorange;
 }
 ```
 
 ```css
-.foo {
-    --mg-button-text-color: darkcyan;
+[data-theme='dark'] {
+    --mg-color-primary: darkorange;
 }
 ```
 :::

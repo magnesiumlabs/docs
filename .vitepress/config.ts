@@ -2,7 +2,7 @@ import { defineConfig } from 'vitepress';
 
 export default defineConfig({
     title: 'Magnesium',
-    description: 'The Sass Framework for Web Design System.',
+    description: 'Sass toolkit for managing design tokens as CSS custom properties.',
     srcDir: 'src/',
     head: [
         [
@@ -34,7 +34,7 @@ export default defineConfig({
                 link: '/guide/getting-started'
             },
             {
-                text: '4.5.x',
+                text: '5.0.x',
                 items: [
                     {
                         text: 'Changelog',
@@ -50,6 +50,10 @@ export default defineConfig({
                     {
                         text: 'What is Magnesium?',
                         link: 'guide/what-is-magnesium'
+                    },
+                    {
+                        text: 'What\'s New in v5',
+                        link: 'guide/whats-new'
                     },
                     {
                         text: 'Getting Started',
@@ -71,19 +75,19 @@ export default defineConfig({
                     {
                         text: 'Mixins',
                         link: 'guide/mixins'
+                    },
+                    {
+                        text: 'Patterns',
+                        link: 'guide/patterns'
                     }
                 ]
             },
             {
-                text: 'Components',
+                text: 'Migration',
                 items: [
                     {
-                        text: 'Color',
-                        link: 'guide/components/color'
-                    },
-                    {
-                        text: 'Shape',
-                        link: 'guide/components/shape'
+                        text: 'Migrating from v4',
+                        link: 'guide/migration'
                     }
                 ]
             }

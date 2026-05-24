@@ -2,4 +2,4 @@
 
 Documentation for Magnesium.
 
-https://magnesium.design
+https://magnesium.dev

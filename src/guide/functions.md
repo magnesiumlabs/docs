@@ -1,19 +1,39 @@
 # Functions
 
-The Magnesium functions help you to easily manage theme styles from user-provided theme's tokens map.
+## `name($name...)`
 
-## `emit-variable($theme, $token, $fallback, $prefix)`
-
-Emits CSS variable declaration from a user-provided theme's.
+Builds a hyphenated, prefixed string from one or more parts. `null` parts are skipped. Returns a plain **string**, not a CSS variable — use `ref()` when you need a `var()` expression.
 
 #### Parameters
 
-| Parameter   | Description                                                           | Default     |
-|-------------|-----------------------------------------------------------------------|-------------|
-| `$theme`    | The reference theme's tokens map.                                     | `undefined` |
-| `$token`    | The theme token key.                                                  | `undefined` |
-| `$fallback` | Allow to display the CSS variable fallback.                           | `false`     |
-| `$prefix`   | Token's prefix name to prepend for each token's custom property name. | `null`      |
+| Parameter | Description             | Default     |
+|-----------|-------------------------|-------------|
+| `$name`   | One or more name parts. | `undefined` |
+
+#### Usage
+
+```scss
+@use "@magnesium/theme";
+
+theme.name("button", "text-color") // → "mg-button-text-color"
+theme.name(null, "button")         // → "mg-button"
+```
+
+::: tip `name()` vs `ref()`
+Use `name()` when you need the raw string to build a custom property name programmatically. Use `ref()` when you need a ready-to-use `var(--mg-...)` expression as a CSS value.
+:::
+
+---
+
+## `ref($token)`
+
+Returns a `var()` expression for a token name, using the configured prefix. Use this to reference a token across namespaces without hardcoding the prefix.
+
+#### Parameters
+
+| Parameter | Description      | Default     |
+|-----------|------------------|-------------|
+| `$token`  | The token name.  | `undefined` |
 
 #### Usage
 
@@ -21,12 +41,139 @@ Emits CSS variable declaration from a user-provided theme's.
 ```scss
 @use "@magnesium/theme";
 
-$theme: (
+.foo {
+    color: theme.ref("sys-primary");
+}
+```
+
+```css
+.foo {
+    color: var(--mg-sys-primary);
+}
+```
+:::
+
+---
+
+## `refs($tokens, $namespace)`
+
+Transforms a tokens map into `var()` references with fallback values. The Sass map structure is preserved — nested maps remain nested, but their keys are joined into hyphenated CSS variable names. `null` values are preserved as-is.
+
+#### Parameters
+
+| Parameter    | Description                              | Default     |
+|--------------|------------------------------------------|-------------|
+| `$tokens`    | The tokens map.                          | `undefined` |
+| `$namespace` | Namespace to prepend (without prefix).   | `null`      |
+
+#### Usage
+
+```scss
+@use "@magnesium/theme";
+
+$tokens: (
+    "text-color": darkcyan,
+    "font-size": 1rem
+);
+
+$refs: theme.refs($tokens, "button");
+// →
+// (
+//   "text-color": var(--mg-button-text-color, darkcyan),
+//   "font-size": var(--mg-button-font-size, 1rem)
+// )
+```
+
+Nested maps — the Sass structure is kept, keys are joined in the CSS variable name:
+
+```scss
+$tokens: (
+    "padding": (
+        "top": 12px
+    )
+);
+
+$refs: theme.refs($tokens, "button");
+// → "padding": ("top": var(--mg-button-padding-top, 12px))
+```
+
+---
+
+## `validation($refs, $tokens)`
+
+Validates user-provided tokens against a reference schema. Returns `$tokens` unchanged if valid. Throws `@error` with the list of supported tokens if an unknown key is found.
+
+#### Parameters
+
+| Parameter | Description                                     | Default     |
+|-----------|-------------------------------------------------|-------------|
+| `$refs`   | The reference schema — a map or list of keys.   | `undefined` |
+| `$tokens` | The user-provided tokens map to validate.       | `undefined` |
+
+#### Usage
+
+```scss
+@use "@magnesium/theme";
+
+$refs: (
+    "text-color": darkcyan,
+    "font-size": 1rem
+);
+
+$tokens: (
+    "text-color": darkorange
+);
+
+$validated: theme.validation($refs, $tokens);
+// → returns $tokens unchanged
+```
+
+A list can also be used as `$refs`:
+
+```scss
+$refs: ("text-color", "font-size");
+```
+
+#### Error case
+
+Passing an unsupported token key throws a compile-time error:
+
+```scss
+$tokens: (
+    "unknown-token": red
+);
+
+$validated: theme.validation($refs, $tokens);
+// → @error "Unsupported token: 'unknown-token'. Supported tokens: 'text-color, font-size'"
+```
+
+---
+
+## `variable($tokens, $token, $namespace, $fallback)`
+
+Returns a `var()` expression for a single token key. Emits `@warn` if the token is not in the map.
+
+#### Parameters
+
+| Parameter    | Description                              | Default     |
+|--------------|------------------------------------------|-------------|
+| `$tokens`    | The tokens map.                          | `undefined` |
+| `$token`     | The token key to look up.                | `undefined` |
+| `$namespace` | Namespace to prepend (without prefix).   | `null`      |
+| `$fallback`  | Include the token value as CSS fallback. | `false`     |
+
+#### Usage
+
+::: code-group
+```scss
+@use "@magnesium/theme";
+
+$tokens: (
     "text-color": darkcyan
 );
 
 .foo {
-    color: theme.emit-variable($theme, "text-color", false, "button");
+    color: theme.variable($tokens, "text-color", "button");
 }
 ```
 
@@ -37,18 +184,12 @@ $theme: (
 ```
 :::
 
-With `fallback`:
+With fallback:
 
 ::: code-group
 ```scss
-@use "@magnesium/theme";
-
-$theme: (
-    "text-color": darkcyan
-);
-
 .foo {
-    color: theme.emit-variable($theme, "text-color", true, "button");
+    color: theme.variable($tokens, "text-color", "button", $fallback: true);
 }
 ```
 
@@ -57,64 +198,20 @@ $theme: (
     color: var(--mg-button-text-color, darkcyan);
 }
 ```
-::: 
+:::
 
-## `create-theme-vars($theme, $prefix)`
+Without namespace:
 
-Transforms a user-provided theme's tokens map values into a `var()` custom properties.
-
-#### Parameters
-
-| Option    | Description                                                                                     | Default     |
-|-----------|-------------------------------------------------------------------------------------------------|-------------|
-| `$theme`  | The user-provided theme tokens map.                                                             | `undefined` |
-| `$prefix` | Component's name to prepend for each token's custom property name. Set to `false` for disabled. | `undefined` |
-
-#### Usage
-
+::: code-group
 ```scss
-@use "@magnesium/theme";
-
-$tokens: (
-    "text-color": darkcyanz
-);
-
-$theme: theme.create-theme-vars($tokens, "button");
+.foo {
+    color: theme.variable($tokens, "text-color");
+}
 ```
 
-#### Returns
-
-```scss
-$theme: (
-    "text-color": var(--mg-button-text-color, darkcyan)
-);
+```css
+.foo {
+    color: var(--mg-text-color);
+}
 ```
-
-## `validation($reference, $tokens)`
-
-Validates a user-provided theme's token and throws an error if tokens are invalid. Return error if token key doesn't
-exist or the map.
-
-#### Parameters
-
-| Parameter    | Description                           | Default     |
-|--------------|---------------------------------------|-------------|
-| `$reference` | The reference theme's tokens map.     | `undefined` |
-| `$tokens`    | The user-provided theme's tokens map. | `undefined` |
-
-#### Usage
-
-```scss
-@use "@magnesium/theme";
-
-$reference: (
-    "text-color": darkcyan
-);
-
-$tokens: (
-    "text-color": darkorange
-);
-
-$theme: theme.validation($reference, $tokens);
-// Will return map is `true` or error message if `false`.
-```
+:::

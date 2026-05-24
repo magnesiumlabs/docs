@@ -1,43 +1,51 @@
 # Configuration
 
-Without configuration, Magnesium will be generated with default configuration. To customize Magnesium, you can use many
-options describe below.
-
 ## Options
 
-| Option    | Type             | Description                                                                  | Default |
-|-----------|------------------|------------------------------------------------------------------------------|---------|
-| `$prefix` | `string/boolean` | Add global prefix name on any custom properties. Set to `false` for disable. | `mg`    |
+| Option    | Type     | Description                                                    | Default |
+|-----------|----------|----------------------------------------------------------------|---------|
+| `$prefix` | `string` | Global prefix applied to every generated custom property name. | `mg`    |
 
-#### Example
+Configure via the Sass `@use ... with` syntax:
 
 ```scss
 @use "@magnesium/theme" with (
-    $prefix: "foo"
+    $prefix: "ds"
 );
 ```
 
-## Top-level override
+All generated custom properties will use the new prefix:
 
-If variables are already configured on top-level using `@use ... with`, by another dependency for example, you can't use
-this solution anymore, because the module can only be setup once, this is a Sass restriction with **Module System**, but
-another solution exist for override the main configuration, with a dedicated mixin!
-
-| Mixin             | Description                                |
-|-------------------|:-------------------------------------------|
-| `config($prefix)` | Override top-level `prefix` configuration. |
-
-#### Example
-
-The following Sass will configure new parameters:
-
-```scss
-@use "@magnesium/theme";
-
-@include theme.config("fr");
+```css
+--ds-button-text-color: darkcyan;
 ```
 
-:::tip
-See the Sass [official documentation](https://sass-lang.com/documentation/at-rules/use#with-mixins) about override
-configuration with mixins.
+## Disabling the prefix
+
+Set `$prefix` to `false` to emit custom properties without any prefix:
+
+::: code-group
+```scss
+@use "@magnesium/theme" with (
+    $prefix: false
+);
+
+$tokens: (
+    "text-color": darkcyan
+);
+
+:root {
+    @include theme.emit($tokens, "button");
+}
+```
+
+```css
+:root {
+    --button-text-color: darkcyan;
+}
+```
+:::
+
+::: tip
+The module can only be configured once per compilation (Sass restriction). If a dependency already configures `@magnesium/theme`, use the [compat layer](./migration#compat-layer) which exposes the deprecated `config()` mixin as a workaround.
 :::

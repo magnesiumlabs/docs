@@ -1,37 +1,58 @@
 # Getting Started
 
+## Requirements
+
+| Dependency | Version     |
+|------------|-------------|
+| Node.js    | `>= 18`     |
+| Sass       | `>= 1.97.1` |
+
 ## Installation
 
-Add Magnesium as dependencies for your project.
-
-::: code-group
-```bash [npm]
+```bash
 npm install @magnesium/theme
 ```
-:::
 
-## Try
+## Playground
 
-Try it on [StackBlitz](https://stackblitz.com/edit/stackblitz-starters-msdndysd?file=app.scss).
+Try it live on StackBlitz:
+
+[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/~/github.com/magnesiumlabs/magnesium)
 
 ## Usage
 
 ::: code-group
 ```scss
-@use "@magnesium/theme";
+@use "@magnesium/theme" with ($prefix: "ds");
 
-$theme: (
-    "text-color": darkcyan
+$tokens: (
+    "text-color": darkcyan,
+    "font-size": 1rem
 );
 
-.foo {
-    @include theme.emit-custom-props($theme, "button");
+:root {
+    @include theme.emit($tokens, "button");
 }
 ```
 
 ```css
-.foo {
-    --mg-button-text-color: darkcyan;
+:root {
+    --ds-button-text-color: darkcyan;
+    --ds-button-font-size: 1rem;
 }
 ```
 :::
+
+## `pkg:` importer
+
+If your toolchain uses the Sass `pkg:` importer (Vite, modern bundlers), use the package name directly:
+
+```scss
+@use "pkg:@magnesium/theme" with ($prefix: "ds");
+```
+
+Both forms are equivalent — use whichever your setup requires.
+
+## Coming from v4?
+
+See the [migration guide](./migration) for a complete mapping of the old API to v5.
