@@ -11,14 +11,18 @@
     --mg-blue: #0071d7;
     --mg-blue-deep: #0040ca;
 
+    /* Display font for headings — Montserrat (closest free match to the logo's
+       Gotham-style Pier Sans). Swap the first family to change it. */
+    --mg-font-display: 'Montserrat', var(--vp-font-family-base);
+
     --vp-c-brand-1: var(--mg-blue);
     --vp-c-brand-2: var(--mg-cyan);
     --vp-c-brand-3: var(--mg-blue);
     --vp-c-brand-soft: rgba(0, 178, 233, 0.12);
 
-    /* Hero name: a single clean gradient */
+    /* Hero name: rich blue gradient — navy to bright blue, diagonal */
     --vp-home-hero-name-color: transparent;
-    --vp-home-hero-name-background: linear-gradient(100deg, var(--mg-blue-deep), var(--mg-cyan));
+    --vp-home-hero-name-background: linear-gradient(135deg, #001a8c, #0088f0);
 
     --vp-button-brand-bg: var(--mg-blue);
     --vp-button-brand-hover-bg: #2a8fe6;
@@ -36,7 +40,17 @@
     --vp-c-brand-3: var(--mg-cyan);
     --vp-c-brand-soft: rgba(54, 211, 255, 0.14);
 
-    --vp-home-hero-name-background: linear-gradient(100deg, #36d3ff, #aef0ff);
+    --vp-home-hero-name-background: linear-gradient(135deg, #0077e6, #63e0ff);
+}
+
+/* ---- Display font on headings (body stays on the base font) --------- */
+
+.VPHero .name,
+.VPHero .text,
+.vp-doc h1,
+.vp-doc h2 {
+    font-family: var(--mg-font-display);
+    letter-spacing: -0.01em;
 }
 
 /* ---- Hero: faint blueprint grid ------------------------------------- */
@@ -70,4 +84,14 @@
 
 .VPFeature {
     border: 1px solid var(--vp-c-divider);
+}
+
+.VPFeature .icon {
+    color: var(--vp-c-brand-1);
+    background: var(--vp-c-brand-soft) !important;
+}
+
+.VPFeature .icon svg {
+    width: 24px;
+    height: 24px;
 }

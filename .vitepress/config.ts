@@ -1,17 +1,39 @@
 import { defineConfig } from 'vitepress';
 
+const description = 'Sass toolkit for managing design tokens as CSS custom properties.';
+const hostname = 'https://magnesium.dev';
+const ogImage = `${hostname}/og-image.png`;
+
 export default defineConfig({
     title: 'Magnesium',
-    description: 'Sass toolkit for managing design tokens as CSS custom properties.',
+    description,
+    lang: 'en-US',
     srcDir: 'src/',
+    lastUpdated: true,
+    sitemap: {
+        hostname
+    },
     head: [
+        ['link', { rel: 'icon', href: '/favicon.ico' }],
+        ['link', { rel: 'preconnect', href: 'https://fonts.googleapis.com' }],
+        ['link', { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' }],
         [
             'link',
             {
-                rel: 'icon',
-                href: '/favicon.ico'
+                rel: 'stylesheet',
+                href: 'https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap'
             }
         ],
+        ['meta', { name: 'theme-color', content: '#0071d7' }],
+        ['meta', { property: 'og:type', content: 'website' }],
+        ['meta', { property: 'og:title', content: 'Magnesium' }],
+        ['meta', { property: 'og:description', content: description }],
+        ['meta', { property: 'og:image', content: ogImage }],
+        ['meta', { property: 'og:url', content: hostname }],
+        ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
+        ['meta', { name: 'twitter:title', content: 'Magnesium' }],
+        ['meta', { name: 'twitter:description', content: description }],
+        ['meta', { name: 'twitter:image', content: ogImage }],
         [
             'script',
             {
@@ -27,6 +49,13 @@ export default defineConfig({
         siteTitle: false,
         search: {
             provider: 'local'
+        },
+        lastUpdated: {
+            text: 'Last updated'
+        },
+        editLink: {
+            pattern: 'https://github.com/magnesiumlabs/docs/edit/main/src/:path',
+            text: 'Edit this page on GitHub'
         },
         nav: [
             {

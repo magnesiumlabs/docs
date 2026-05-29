@@ -1,0 +1,20 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="brand" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0040ca"/>
+      <stop offset="0.5" stop-color="#0071d7"/>
+      <stop offset="1" stop-color="#00b2e9"/>
+    </linearGradient>
+    <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+      <path d="M60 0H0V60" fill="none" stroke="#ffffff" stroke-opacity="0.045"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="630" fill="#0b0f17"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  <rect width="1200" height="6" fill="url(#brand)"/>
+
+  <text x="100" y="300" font-family="Arial, Helvetica, sans-serif" font-size="124" font-weight="700" fill="url(#brand)">Magnesium</text>
+  <text x="104" y="372" font-family="Arial, Helvetica, sans-serif" font-size="40" fill="#c9d4e3">Sass toolkit for managing design tokens.</text>
+  <text x="104" y="436" font-family="Arial, Helvetica, sans-serif" font-size="26" letter-spacing="3" fill="#5b6b82">STATELESS &#183; EXPLICIT &#183; COMPOSABLE</text>
+</svg>
