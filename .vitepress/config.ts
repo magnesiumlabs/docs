@@ -34,7 +34,7 @@ export default defineConfig({
                 link: '/guide/getting-started'
             },
             {
-                text: '5.0.x',
+                text: '5.1.x',
                 items: [
                     {
                         text: 'Changelog',

@@ -76,6 +76,30 @@ Scope a color scheme to an explicit CSS selector instead of a `@media` query —
 ```
 :::
 
+## New: `$layer` on `scheme()`
+
+Wrap a color scheme — media query or selector — in a named CSS cascade layer with the `$layer` parameter, so light and dark declarations share the same layer.
+
+::: code-group
+```scss
+@include theme.scheme("dark", $layer: "tokens") {
+    :root {
+        --mg-color-primary: darkorange;
+    }
+}
+```
+
+```css
+@layer tokens {
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --mg-color-primary: darkorange;
+        }
+    }
+}
+```
+:::
+
 ## New: `$namespace` replaces `$prefix` / `$component`
 
 All functions and mixins now use a consistent `$namespace` parameter (without the global prefix) instead of the previous `$prefix` or `$component` names.

@@ -47,5 +47,9 @@ $tokens: (
 :::
 
 ::: tip
-The module can only be configured once per compilation (Sass restriction). If a dependency already configures `@magnesium/theme`, use the [compat layer](./migration#compat-layer) which exposes the deprecated `config()` mixin as a workaround.
+`$prefix` must be configured once, at your compilation entry point. All other files that `@use "@magnesium/theme"` will
+inherit the configured prefix automatically — no need to repeat `with (...)`.
+
+Configuring it in multiple files will cause a Sass error. If a dependency already configures `@magnesium/theme`, use
+the [compat layer](./migration#compat-layer) which exposes the deprecated `config()` mixin as a workaround.
 :::

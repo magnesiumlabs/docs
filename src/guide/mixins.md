@@ -157,9 +157,9 @@ $refs: (
 
 ---
 
-## `scheme($scheme, $selector)`
+## `scheme($scheme, $selector, $layer)`
 
-Scopes content to a color scheme. Without `$selector`, wraps in a `@media (prefers-color-scheme)` query. With `$selector`, wraps in a selector rule instead.
+Scopes content to a color scheme. Without `$selector`, wraps in a `@media (prefers-color-scheme)` query. With `$selector`, wraps in a selector rule instead. With `$layer`, wraps the whole output in a named cascade layer.
 
 #### Parameters
 
@@ -167,6 +167,7 @@ Scopes content to a color scheme. Without `$selector`, wraps in a `@media (prefe
 |-------------|--------------------------------------------------------------------------|-----------|
 | `$scheme`   | The color scheme: `"light"` or `"dark"`.                                 | `"light"` |
 | `$selector` | A CSS selector to scope content. Bypasses the media query when provided. | `null`    |
+| `$layer`    | CSS cascade layer name. Wraps the whole output in `@layer`.              | `null`    |
 
 #### Usage — media query
 
@@ -202,6 +203,30 @@ Scopes content to a color scheme. Without `$selector`, wraps in a `@media (prefe
 ```css
 [data-theme='dark'] {
     --mg-color-primary: darkorange;
+}
+```
+:::
+
+#### Usage — cascade layer
+
+`$layer` wraps the whole output — media query or selector — in a named layer, so light and dark declarations share the same cascade layer.
+
+::: code-group
+```scss
+@include theme.scheme("dark", $layer: "tokens") {
+    :root {
+        --mg-color-primary: darkorange;
+    }
+}
+```
+
+```css
+@layer tokens {
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --mg-color-primary: darkorange;
+        }
+    }
 }
 ```
 :::
