@@ -1,6 +1,73 @@
+/**
+ * Magnesium docs theme.
+ *
+ * Restrained and precise. Luminosity comes from a clean, vivid palette and
+ * crisp contrast — not from glows or light sources. A faint blueprint grid
+ * nods to the "design system" nature of the library. No movement on hover.
+ */
+
 :root {
+    --mg-cyan: #00b2e9;
+    --mg-blue: #0071d7;
+    --mg-blue-deep: #0040ca;
+
+    --vp-c-brand-1: var(--mg-blue);
+    --vp-c-brand-2: var(--mg-cyan);
+    --vp-c-brand-3: var(--mg-blue);
+    --vp-c-brand-soft: rgba(0, 178, 233, 0.12);
+
+    /* Hero name: a single clean gradient */
     --vp-home-hero-name-color: transparent;
-    --vp-home-hero-name-background: linear-gradient(90deg, #0071d7, #00b2e9);
-    --vp-c-brand-1: #00b2e9;
-    --vp-button-brand-bg: #0071d7;
+    --vp-home-hero-name-background: linear-gradient(100deg, var(--mg-blue-deep), var(--mg-cyan));
+
+    --vp-button-brand-bg: var(--mg-blue);
+    --vp-button-brand-hover-bg: #2a8fe6;
+    --vp-button-brand-active-bg: var(--mg-blue-deep);
+}
+
+.dark {
+    /* Deep, cool background — vivid accents stay crisp and readable on it */
+    --vp-c-bg: #0b0f17;
+    --vp-c-bg-alt: #0e131d;
+    --vp-c-bg-soft: #141a26;
+
+    --vp-c-brand-1: #36d3ff;
+    --vp-c-brand-2: #6fe0ff;
+    --vp-c-brand-3: var(--mg-cyan);
+    --vp-c-brand-soft: rgba(54, 211, 255, 0.14);
+
+    --vp-home-hero-name-background: linear-gradient(100deg, #36d3ff, #aef0ff);
+}
+
+/* ---- Hero: faint blueprint grid ------------------------------------- */
+
+.VPHome {
+    position: relative;
+}
+
+.VPHome::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    background-image:
+        linear-gradient(var(--vp-c-divider) 1px, transparent 1px),
+        linear-gradient(90deg, var(--vp-c-divider) 1px, transparent 1px);
+    background-size: 64px 64px;
+    -webkit-mask-image: radial-gradient(circle at 50% 18%, black, transparent 60%);
+    mask-image: radial-gradient(circle at 50% 18%, black, transparent 60%);
+    opacity: 0.4;
+}
+
+/* ---- Buttons: lighten on hover, no movement ------------------------- */
+
+.VPButton.brand {
+    transition: background-color 0.18s ease;
+}
+
+/* ---- Feature cards: static (they aren't links) ---------------------- */
+
+.VPFeature {
+    border: 1px solid var(--vp-c-divider);
 }
