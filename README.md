@@ -1,4 +1,4 @@
-# magnesium.design
+# magnesium.dev
 
 Documentation for Magnesium.
 

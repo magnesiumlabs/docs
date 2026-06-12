@@ -1,3 +1,8 @@
+---
+title: Functions
+description: API reference for Magnesium's Sass functions for building prefixed names and referencing design tokens as var() expressions.
+---
+
 # Functions
 
 ## `name($name...)`

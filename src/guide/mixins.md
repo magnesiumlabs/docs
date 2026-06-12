@@ -1,3 +1,8 @@
+---
+title: Mixins
+description: API reference for Magnesium's Sass mixins to emit, validate, and scope design tokens as CSS custom properties with cascade-layer support.
+---
+
 # Mixins
 
 ## `emit($tokens, $namespace, $include, $exclude, $layer)`

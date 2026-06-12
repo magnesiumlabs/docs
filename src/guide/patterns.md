@@ -1,3 +1,8 @@
+---
+title: Patterns
+description: Common patterns for structuring design tokens with Magnesium, from global token layers to component-scoped custom properties.
+---
+
 # Patterns
 
 Common patterns for structuring design tokens with Magnesium.

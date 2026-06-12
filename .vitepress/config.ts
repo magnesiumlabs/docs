@@ -13,6 +13,23 @@ export default defineConfig({
     sitemap: {
         hostname
     },
+    transformHead({ pageData, title, description: pageDescription }) {
+        const path = pageData.relativePath
+            .replace(/index\.md$/, '')
+            .replace(/\.md$/, '.html');
+        const canonical = `${hostname}/${path}`;
+        const pageTitle = title || 'Magnesium';
+        const desc = pageDescription || description;
+
+        return [
+            ['link', { rel: 'canonical', href: canonical }],
+            ['meta', { property: 'og:url', content: canonical }],
+            ['meta', { property: 'og:title', content: pageTitle }],
+            ['meta', { property: 'og:description', content: desc }],
+            ['meta', { name: 'twitter:title', content: pageTitle }],
+            ['meta', { name: 'twitter:description', content: desc }]
+        ];
+    },
     head: [
         ['link', { rel: 'icon', href: '/favicon.ico' }],
         ['link', { rel: 'preconnect', href: 'https://fonts.googleapis.com' }],
@@ -26,13 +43,9 @@ export default defineConfig({
         ],
         ['meta', { name: 'theme-color', content: '#0071d7' }],
         ['meta', { property: 'og:type', content: 'website' }],
-        ['meta', { property: 'og:title', content: 'Magnesium' }],
-        ['meta', { property: 'og:description', content: description }],
+        ['meta', { property: 'og:site_name', content: 'Magnesium' }],
         ['meta', { property: 'og:image', content: ogImage }],
-        ['meta', { property: 'og:url', content: hostname }],
         ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
-        ['meta', { name: 'twitter:title', content: 'Magnesium' }],
-        ['meta', { name: 'twitter:description', content: description }],
         ['meta', { name: 'twitter:image', content: ogImage }],
         [
             'script',

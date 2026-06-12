@@ -1,3 +1,8 @@
+---
+title: Migrating from v4
+description: Upgrade guide from Magnesium v4 to v5, covering the renamed API, removed config() mixin and sub-modules, and before/after examples.
+---
+
 # Migrating from v4
 
 v5 is a full rewrite of the API. All functions and mixins have been renamed or replaced. The old API is **deprecated** and will be removed in v6.

@@ -1,3 +1,8 @@
+---
+title: What's New in v5
+description: Highlights of the Magnesium v5 rewrite — a fully stateless and explicit API, including the new theme() mixin for validating and emitting tokens in one call.
+---
+
 # What's New in v5
 
 v5 is a full API rewrite focused on making every call stateless and explicit. Here are the highlights.

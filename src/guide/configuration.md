@@ -1,3 +1,8 @@
+---
+title: Configuration
+description: Configure Magnesium with the Sass @use ... with syntax, including the global $prefix applied to every generated CSS custom property name.
+---
+
 # Configuration
 
 ## Options
