@@ -15,6 +15,9 @@
        Gotham-style Pier Sans). Swap the first family to change it. */
     --mg-font-display: 'Montserrat', var(--vp-font-family-base);
 
+    /* Square "Mg" logo: bump the navbar logo height (default 24px) so the icon reads larger */
+    --vp-nav-logo-height: 36px;
+
     --vp-c-brand-1: var(--mg-blue);
     --vp-c-brand-2: var(--mg-cyan);
     --vp-c-brand-3: var(--mg-blue);
