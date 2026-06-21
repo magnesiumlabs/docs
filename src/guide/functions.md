@@ -156,7 +156,7 @@ $validated: theme.validation($refs, $tokens);
 
 ## `variable($tokens, $token, $namespace, $fallback)`
 
-Returns a `var()` expression for a single token key. Emits `@warn` if the token is not in the map.
+Returns a `var()` expression for a single token key. Throws `@error` if the token is not in the map.
 
 #### Parameters
 
