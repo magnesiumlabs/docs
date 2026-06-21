@@ -123,9 +123,9 @@ $tokens: (
 
 ---
 
-## `theme($refs, $tokens, $namespace, $include, $exclude)`
+## `theme($refs, $tokens, $namespace, $include, $exclude, $layer)`
 
-Validates user-provided tokens against a reference schema, then emits the custom property declarations in one call. Throws `@error` on unknown tokens.
+Validates user-provided tokens against a reference schema, then emits the custom property declarations in one call. Throws `@error` on unknown tokens. `$include`, `$exclude` and `$layer` behave exactly as in [`emit()`](#emit-tokens-namespace-include-exclude-layer).
 
 #### Parameters
 
@@ -136,6 +136,7 @@ Validates user-provided tokens against a reference schema, then emits the custom
 | `$namespace` | Namespace to prepend (without prefix).                    | `null`  |
 | `$include`   | List of token keys to emit.                               | `null`  |
 | `$exclude`   | List of token keys to skip.                               | `null`  |
+| `$layer`     | CSS cascade layer name. Wraps output in `@layer`.         | `null`  |
 
 #### Usage
 
@@ -156,6 +157,24 @@ $refs: (
 ```css
 .foo {
     --mg-button-text-color: darkorange;
+}
+```
+:::
+
+#### Cascade layer with `$layer`
+
+::: code-group
+```scss
+:root {
+    @include theme.theme($refs, ("text-color": darkorange), "button", $layer: "tokens");
+}
+```
+
+```css
+@layer tokens {
+    :root {
+        --mg-button-text-color: darkorange;
+    }
 }
 ```
 :::
