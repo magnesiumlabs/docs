@@ -1,16 +1,16 @@
 ---
 title: Getting Started
-description: Install Magnesium and emit your first design tokens as CSS custom properties in a few lines of Sass. Requires Node.js >= 18 and Sass >= 1.97.1.
+description: Install Magnesium and emit your first design tokens as CSS custom properties in a few lines of Sass. Requires Node.js ^20.19.0 || >= 22.12.0 and Sass >= 1.97.1.
 ---
 
 # Getting Started
 
 ## Requirements
 
-| Dependency | Version     |
-|------------|-------------|
-| Node.js    | `>= 18`     |
-| Sass       | `>= 1.97.1` |
+| Dependency | Version                    |
+|------------|----------------------------|
+| Node.js    | `^20.19.0 \|\| >= 22.12.0` |
+| Sass       | `>= 1.97.1`                |
 
 ## Installation
 
