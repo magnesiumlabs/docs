@@ -109,7 +109,17 @@ $tokens: (
 | `emit-variable($tokens, "token", true, "btn")`    | `variable($tokens, "token", "btn", true)`          |
 | `emit-custom-props($tokens, "btn")`               | `emit($tokens, "btn")`                             |
 | `emit-color-scheme("dark")`                       | `scheme("dark")`                                   |
-| `emit-theme-vars($refs-map)`                      | `emit($refs-map)`                                  |
+| `emit-theme-vars($refs-map)`                      | `emit($tokens, "btn")`                             |
+
+::: warning `emit-theme-vars()` is not `emit($refs-map)`
+In v4, `emit-theme-vars()` took the map returned by `create-theme-vars()` and re-emitted the values it carried, so
+`create-theme-vars($tokens, "btn")` + `emit-theme-vars($refs)` produced `--mg-btn-primary: #0071d7`. There is no
+round-trip in v5 — emit the raw tokens directly.
+
+Passing a `refs()` map to `emit()` is a **different** operation: it declares aliases pointing at the source layer
+(`--mg-primary: var(--mg-btn-primary, #0071d7)`). That pattern is covered in
+[Aliasing a whole token layer](./patterns#aliasing-a-whole-token-layer).
+:::
 
 ## Compat layer
 
@@ -119,7 +129,11 @@ Import the compatibility layer to keep using the v4 API while migrating progress
 @use "@magnesium/theme/compat" as theme;
 ```
 
-The compat layer re-exposes the v4 API on top of v5 internals and emits a `@warn` on each deprecated call. It also re-exports the full v5 API, so you can migrate call by call under a single import.
+The compat layer re-exposes the v4 API on top of v5 internals and emits a `@warn` on each deprecated call. It also re-exports part of the v5 API — `name()`, `refs()`, `variable()`, `validation()`, `emit()` and `scheme()` — so you can migrate call by call under a single import.
+
+::: warning Not everything is available through compat
+`theme()` and `ref()` are **not** re-exported, and the compat `emit()` / `scheme()` do not accept `$layer` (nor `$selector` on `scheme()`). Reaching for any of them under a compat import fails to compile — import `@magnesium/theme` directly instead.
+:::
 
 ::: warning
 The compat layer and all deprecated APIs will be removed in v6.
