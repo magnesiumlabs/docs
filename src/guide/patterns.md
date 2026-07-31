@@ -195,3 +195,47 @@ $button-tokens: (
 }
 ```
 :::
+
+## Aliasing a whole token layer
+
+`ref()` aliases one token at a time. To alias an entire layer at once, pass the tokens through `refs()` and emit the
+result: every value becomes a `var()` reference to the source layer, keeping the original value as fallback.
+
+::: code-group
+```scss
+@use "@magnesium/theme";
+
+$sys-tokens: (
+    "primary": #0071d7,
+    "surface": #f5f5f5
+);
+
+// The system layer holds the real values.
+:root {
+    @include theme.emit($sys-tokens, "sys");
+}
+
+// The component layer points at it — one var() per token.
+:root {
+    @include theme.emit(theme.refs($sys-tokens, "sys"), "button");
+}
+```
+
+```css
+:root {
+    --mg-sys-primary: #0071d7;
+    --mg-sys-surface: #f5f5f5;
+}
+
+:root {
+    --mg-button-primary: var(--mg-sys-primary, #0071d7);
+    --mg-button-surface: var(--mg-sys-surface, #f5f5f5);
+}
+```
+:::
+
+The two namespaces play different roles: the one given to `refs()` builds the names being **pointed at**, the one given
+to `emit()` builds the names being **declared**.
+
+Overriding `--mg-sys-primary` then cascades to every component token aliased to it, while the fallback keeps the
+component working even if the system layer is never emitted.
