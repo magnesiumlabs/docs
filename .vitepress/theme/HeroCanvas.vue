@@ -1,7 +1,7 @@
 <script setup>
 /**
  * Home hero illustration: the "define → emit → consume" stack, dropping one layer at a time on
- * an infinite loop. Ported from the standalone prototype at the repo root (index.html) into the
+ * an infinite loop. Ported from the standalone prototype next to this file (hero-canvas.prototype.html) into the
  * theme's `home-hero-image` slot so it lives inside the actual hero layout instead of a page of
  * its own.
  */
