@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Magnesium.dev - Assembly 3D Canvas</title>
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #08090d;
+            }
+        }
+
+        html.dark {
+            --bg-color: #08090d;
+        }
+
+        html.light {
+            --bg-color: #f8fafc;
+        }
+
+        body {
+            background: var(--bg-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: system-ui, -apple-system, sans-serif;
+            overflow: hidden;
+            transition: background-color 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="c" width="650" height="650"></canvas>
+
+<script>
+    const canvas = document.getElementById('c');
+    const ctx = canvas.getContext('2d');
+
+    const CX = canvas.width / 2;
+    const CY = canvas.height * 0.65;
+
+    // Configuration des 3 couches Magnesium
+    const STACK_LAYERS = [
+        {
+            label: '1. DEFINE',
+            sub: '$tokens map',
+            colorHex: '#00f2fe',
+            delay: 0,
+            duration: 2000
+        },
+        {
+            label: '2. EMIT',
+            sub: '@layer tokens',
+            colorHex: '#bd34fe',
+            delay: 1800,
+            duration: 2000
+        },
+        {
+            label: '3. CONSUME',
+            sub: 'var(--mg-*)',
+            colorHex: '#ff0844',
+            delay: 3600,
+            duration: 2000
+        }
+    ];
+
+    const HOLD_TIME = 2200;
+    const FADE_OUT_TIME = 1000;
+    const TOTAL_CYCLE = 3600 + 2000 + HOLD_TIME + FADE_OUT_TIME;
+
+    // Dimensions exactes de la version originale du socle 9 éléments
+    const BASE_SIZE = 260;
+    const BASE_OFFSET = BASE_SIZE / 2;
+    const BASE_RADIUS = 24;
+    const BASE_HEIGHT_3D = 20;
+
+    const LAYER_W = 200;
+    const LAYER_H = 200;
+    const GAP = 38;
+    const DROP_HEIGHT = -320;
+
+    function easeOutCubic(t) {
+        return 1 - Math.pow(1 - t, 3);
+    }
+
+    function getThemeColors() {
+        const hasDarkClass = document.documentElement.classList.contains('dark');
+        const hasLightClass = document.documentElement.classList.contains('light');
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        const isDark = hasDarkClass || (!hasLightClass && prefersDark);
+
+        return {
+            isDark,
+            baseSideTop: isDark ? '#1a2236' : '#cbd5e1',
+            baseSideBottom: isDark ? '#0f172a' : '#94a3b8',
+            baseTop: isDark ? '#0d1322' : '#f1f5f9',
+            gridLine: isDark ? 'rgba(0, 242, 254, 0.18)' : 'rgba(0, 180, 216, 0.22)',
+            cardBg: isDark ? 'rgba(13, 18, 30, 0.94)' : 'rgba(255, 255, 255, 0.95)',
+            textPrimary: isDark ? '#ffffff' : '#0f172a',
+            baseOutline: '#00f2fe'
+        };
+    }
+
+    // Le socle 3D 9 éléments avec l'outline bas positionné au bon endroit et visible
+    function draw3DPedestal(colors) {
+        const baseShape = new Path2D();
+        baseShape.roundRect(-BASE_OFFSET, -BASE_OFFSET, BASE_SIZE, BASE_SIZE, BASE_RADIUS);
+
+        // 1. Flans 3D du socle
+        for (let h = BASE_HEIGHT_3D; h > 0; h--) {
+            ctx.save();
+            ctx.translate(CX, CY + h);
+            ctx.scale(1, 0.5);
+            ctx.rotate(-Math.PI / 4);
+
+            ctx.fillStyle = h > BASE_HEIGHT_3D / 2 ? colors.baseSideTop : colors.baseSideBottom;
+            ctx.fill(baseShape);
+            ctx.restore();
+        }
+
+        // 2. Outline de la base inférieure (placé après les flancs pour ne pas être masqué, avec un rendu net et visible)
+        ctx.save();
+        ctx.translate(CX, CY + BASE_HEIGHT_3D);
+        ctx.scale(1, 0.5);
+        ctx.rotate(-Math.PI / 4);
+        ctx.beginPath();
+        ctx.roundRect(-BASE_OFFSET, -BASE_OFFSET, BASE_SIZE, BASE_SIZE, BASE_RADIUS);
+        ctx.strokeStyle = colors.baseOutline;
+        ctx.shadowColor = colors.baseOutline;
+        ctx.shadowBlur = colors.isDark ? 10 : 5;
+        ctx.lineWidth = 2.5;
+        ctx.stroke();
+        ctx.restore();
+
+        // 3. Plateau supérieur
+        ctx.save();
+        ctx.translate(CX, CY);
+        ctx.scale(1, 0.5);
+        ctx.rotate(-Math.PI / 4);
+
+        ctx.fillStyle = colors.baseTop;
+        ctx.fill(baseShape);
+
+        // Grille gravée à l'intérieur
+        ctx.save();
+        ctx.clip(baseShape);
+
+        ctx.beginPath();
+        ctx.strokeStyle = colors.gridLine;
+        ctx.lineWidth = 1;
+        const step = BASE_SIZE / 6;
+
+        for (let x = -BASE_OFFSET + step; x < BASE_OFFSET; x += step) {
+            ctx.moveTo(x, -BASE_OFFSET);
+            ctx.lineTo(x, BASE_OFFSET);
+        }
+        for (let y = -BASE_OFFSET + step; y < BASE_OFFSET; y += step) {
+            ctx.moveTo(-BASE_OFFSET, y);
+            ctx.lineTo(BASE_OFFSET, y);
+        }
+        ctx.stroke();
+        ctx.restore();
+
+        // Contour supérieur
+        ctx.strokeStyle = colors.baseOutline;
+        ctx.shadowColor = colors.baseOutline;
+        ctx.shadowBlur = colors.isDark ? 12 : 6;
+        ctx.lineWidth = 1.8;
+        ctx.stroke(baseShape);
+
+        ctx.restore();
+    }
+
+    // Dessin d'une plaque empilée
+    function drawLayerCard(layerIndex, offsetY, alpha, colorHex, colors) {
+        const targetY = CY - (layerIndex * GAP) + offsetY;
+
+        ctx.save();
+        ctx.translate(CX, targetY);
+        ctx.scale(1, 0.5);
+        ctx.rotate(-Math.PI / 4);
+
+        ctx.globalAlpha = alpha;
+
+        const halfW = LAYER_W / 2;
+        const halfH = LAYER_H / 2;
+
+        // Corps de la plaque
+        ctx.beginPath();
+        ctx.roundRect(-halfW, -halfH, LAYER_W, LAYER_H, 14);
+        ctx.fillStyle = colors.cardBg;
+        ctx.fill();
+
+        // Contour Néon
+        ctx.strokeStyle = colorHex;
+        ctx.shadowColor = colorHex;
+        ctx.shadowBlur = colors.isDark ? 20 : 10;
+        ctx.lineWidth = 2.5;
+        ctx.stroke();
+
+        // Textes
+        const layerData = STACK_LAYERS[layerIndex];
+        ctx.save();
+        ctx.shadowBlur = 0;
+
+        // Titre principal
+        ctx.fillStyle = colors.textPrimary;
+        ctx.font = '800 19px system-ui, -apple-system, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(layerData.label, 0, -12);
+
+        // Sous-titre code
+        ctx.fillStyle = colorHex;
+        ctx.font = '700 14px monospace';
+        ctx.fillText(layerData.sub, 0, 14);
+
+        ctx.restore();
+        ctx.restore();
+    }
+
+    function animate(time) {
+        const colors = getThemeColors();
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Socle 3D
+        draw3DPedestal(colors);
+
+        const cycleTime = time % TOTAL_CYCLE;
+
+        // Fondu de fin de cycle
+        let fadeOut = 1;
+        const fadeStart = TOTAL_CYCLE - FADE_OUT_TIME;
+        if (cycleTime > fadeStart) {
+            fadeOut = Math.max(0, 1 - (cycleTime - fadeStart) / FADE_OUT_TIME);
+        }
+
+        // Séquence de chute des couches
+        STACK_LAYERS.forEach((layer, index) => {
+            const elapsed = Math.max(0, cycleTime - layer.delay);
+            if (elapsed > 0) {
+                const progress = Math.min(1, elapsed / layer.duration);
+                const dropEase = easeOutCubic(progress);
+
+                const offsetY = DROP_HEIGHT * (1 - dropEase);
+                const alpha = Math.min(1, progress * 2) * fadeOut;
+
+                drawLayerCard(index, offsetY, alpha, layer.colorHex, colors);
+            }
+        });
+
+        requestAnimationFrame(animate);
+    }
+
+    requestAnimationFrame(animate);
+</script>
+</body>
+</html>
