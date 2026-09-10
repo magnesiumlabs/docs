@@ -1,10 +1,12 @@
 import { defineConfig } from 'vitepress';
+import baseConfig from '@frontfactory/vitepress-theme/config';
 
 const description = 'Sass toolkit for managing design tokens as CSS custom properties.';
 const hostname = 'https://magnesium.dev';
 const ogImage = `${hostname}/og-image.png`;
 
 export default defineConfig({
+    extends: baseConfig,
     title: 'Magnesium',
     description,
     lang: 'en-US',
@@ -60,7 +62,7 @@ export default defineConfig({
             light: '/logo.svg',
             dark: '/logo-white.svg'
         },
-        siteTitle: false,
+        siteTitle: 'Magnesium',
         search: {
             provider: 'local'
         },
@@ -77,7 +79,7 @@ export default defineConfig({
                 link: '/guide/getting-started'
             },
             {
-                text: '5.1.x',
+                text: '5.2.x',
                 items: [
                     {
                         text: 'Changelog',
@@ -92,19 +94,19 @@ export default defineConfig({
                 items: [
                     {
                         text: 'What is Magnesium?',
-                        link: 'guide/what-is-magnesium'
+                        link: '/guide/what-is-magnesium'
                     },
                     {
                         text: 'What\'s New in v5',
-                        link: 'guide/whats-new'
+                        link: '/guide/whats-new'
                     },
                     {
                         text: 'Getting Started',
-                        link: 'guide/getting-started'
+                        link: '/guide/getting-started'
                     },
                     {
                         text: 'Configuration',
-                        link: 'guide/configuration'
+                        link: '/guide/configuration'
                     }
                 ]
             },
@@ -113,15 +115,15 @@ export default defineConfig({
                 items: [
                     {
                         text: 'Functions',
-                        link: 'guide/functions'
+                        link: '/guide/functions'
                     },
                     {
                         text: 'Mixins',
-                        link: 'guide/mixins'
+                        link: '/guide/mixins'
                     },
                     {
                         text: 'Patterns',
-                        link: 'guide/patterns'
+                        link: '/guide/patterns'
                     }
                 ]
             },
@@ -130,7 +132,7 @@ export default defineConfig({
                 items: [
                     {
                         text: 'Migrating from v4',
-                        link: 'guide/migration'
+                        link: '/guide/migration'
                     }
                 ]
             }
@@ -143,7 +145,28 @@ export default defineConfig({
         ],
         footer: {
             message: 'Released under the MIT License.',
-            copyright: 'Copyright © 2022-present'
+            copyright: `Copyright © 2022-${new Date().getFullYear()} Front Factory`
+        },
+        ff: {
+            navOrder: 'menu-first',
+            footerColumns: [
+                {
+                    title: 'Guide',
+                    items: [
+                        { text: 'Getting Started', link: '/guide/getting-started' },
+                        { text: 'Configuration', link: '/guide/configuration' },
+                        { text: 'What\'s New in v5', link: '/guide/whats-new' }
+                    ]
+                },
+                {
+                    title: 'Project',
+                    items: [
+                        { text: 'GitHub', link: 'https://github.com/magnesiumlabs/magnesium' },
+                        { text: 'Changelog', link: 'https://github.com/magnesiumlabs/magnesium/blob/main/CHANGELOG.md' },
+                        { text: 'Migrating from v4', link: '/guide/migration' }
+                    ]
+                }
+            ]
         }
     }
 });
