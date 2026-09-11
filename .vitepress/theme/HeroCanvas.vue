@@ -32,6 +32,12 @@ const LAYER_H = 200;
 const GAP = 38;
 const DROP_HEIGHT = -320;
 
+// The pedestal is the widest element on screen: its isometric transform (rotate 45°, then scale
+// the y-axis by 0.5) turns a BASE_SIZE square into a diamond whose on-screen width is
+// BASE_SIZE * sqrt(2). Scale everything up around the illustration's own center so that diamond's
+// width becomes CONTENT_WIDTH_RATIO of the canvas, instead of guessing a pixel size.
+const CONTENT_WIDTH_RATIO = 0.8;
+
 function easeOutCubic(t) {
     return 1 - Math.pow(1 - t, 3);
 }
@@ -60,6 +66,7 @@ onMounted(() => {
     const ctx = canvas.getContext('2d');
     const CX = canvas.width / 2;
     const CY = canvas.height * 0.65;
+    const CONTENT_SCALE = (CONTENT_WIDTH_RATIO * canvas.width) / (BASE_SIZE * Math.SQRT2);
 
     function draw3DPedestal(colors) {
         const baseShape = new Path2D();
@@ -172,6 +179,11 @@ onMounted(() => {
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+        ctx.save();
+        ctx.translate(CX, CY);
+        ctx.scale(CONTENT_SCALE, CONTENT_SCALE);
+        ctx.translate(-CX, -CY);
+
         draw3DPedestal(colors);
 
         const cycleTime = time % TOTAL_CYCLE;
@@ -194,6 +206,8 @@ onMounted(() => {
                 drawLayerCard(index, offsetY, alpha, layer.colorHex, colors);
             }
         });
+
+        ctx.restore();
 
         rafId = requestAnimationFrame(animate);
     }
