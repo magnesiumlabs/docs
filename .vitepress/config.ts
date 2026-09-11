@@ -145,7 +145,7 @@ export default defineConfig({
         ],
         footer: {
             message: 'Released under the MIT License.',
-            copyright: `Copyright © 2022-${new Date().getFullYear()} Front Factory`
+            copyright: `Copyright © 2022-${new Date().getFullYear()} <a href="https://frontfactory.dev">Front Factory</a>.`
         },
         ff: {
             navOrder: 'menu-first',
