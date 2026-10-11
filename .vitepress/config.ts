@@ -122,11 +122,14 @@ export default defineConfig({
         ['meta', { property: 'og:image:width', content: '1200' }],
         ['meta', { property: 'og:image:height', content: '630' }],
         ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
+        ['script', { async: '', src: `https://www.googletagmanager.com/gtag/js?id=${gaId}` }],
         [
             'script',
-            {
-                src: 'https://www.googletagmanager.com/gtag/js?id=G-FENS3716B9'
-            }
+            {},
+            `window.dataLayer = window.dataLayer || [];
+function gtag() { dataLayer.push(arguments); }
+gtag('js', new Date());
+gtag('config', '${gaId}');`
         ]
     ],
     themeConfig: {
