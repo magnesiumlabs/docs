@@ -1,6 +1,8 @@
 ---
 layout: home
-
+title: Magnesium — Sass toolkit for design tokens
+titleTemplate: false
+description: A stateless Sass toolkit that turns Sass maps into scoped, prefixed CSS custom properties, with validation, cascade layers and color schemes.
 hero:
   name: "by Front Factory"
   text: "A Sass toolkit for design tokens."

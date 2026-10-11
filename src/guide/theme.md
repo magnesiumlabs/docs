@@ -1,6 +1,10 @@
 ---
 title: Theme (v4, deprecated)
 description: Legacy documentation for the deprecated Magnesium v4 theme API, removed in v5. See the Functions, Mixins, and migration guides for the current API.
+head:
+  - - meta
+    - name: robots
+      content: noindex, follow
 ---
 
 ::: warning Deprecated

@@ -1,6 +1,6 @@
 ---
 title: What is Magnesium?
-description: Magnesium is a stateless Sass toolkit that turns Sass maps into scoped, prefixed CSS custom properties, with token validation, cascade layers, and color-scheme scoping.
+description: Magnesium is a stateless Sass toolkit that turns Sass maps into scoped, prefixed CSS custom properties, with validation, cascade layers and color schemes.
 ---
 
 # What is Magnesium?
