@@ -3,9 +3,9 @@
     "type": "module",
     "scripts": {
         "dev": "vitepress dev",
+        "build": "vitepress build",
         "preview": "vitepress preview",
-        "prepare": "husky",
-        "build": "vitepress build"
+        "prepare": "husky"
     },
     "engines": {
         "node": ">=20"
