@@ -14,7 +14,7 @@ npm run build     # Build static site to .vitepress/dist/
 npm run preview   # Preview the built site
 ```
 
-Node ≥ 20 required.
+Node ≥ 24 required (declared by the shared `@frontfactory/vitepress-theme`).
 
 ## Architecture
 
