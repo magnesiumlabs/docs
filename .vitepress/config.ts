@@ -5,6 +5,7 @@ import { generateOgImages, ogImageName, type OgPage } from './og';
 
 const description = 'Sass toolkit for managing design tokens as CSS custom properties.';
 const hostname = 'https://magnesium.dev';
+const gaId = 'G-FENS3716B9';
 const ogImage = `${hostname}/og-image.png`;
 const ogImageAlt = 'Magnesium — a Sass toolkit for design tokens';
 // `lastUpdated` and the sitemap's <lastmod> come from git history; a shallow clone flattens them
@@ -17,8 +18,6 @@ try {
     // Not a git checkout (e.g. source archive): nothing to warn about.
 }
 
-const isNoindex = (frontmatter: Record<string, any>) =>
-    (frontmatter.head ?? []).some((tag: any[]) => tag[1]?.name === 'robots' && /noindex/.test(tag[1]?.content));
 const ogPages = new Map<string, OgPage>();
 const repository = 'https://github.com/magnesiumlabs/magnesium';
 
@@ -32,11 +31,11 @@ export default defineConfig({
     cleanUrls: true,
     sitemap: {
         hostname,
-        transformItems: items => items.filter(item => !item.url.includes('guide/theme') && !item.url.includes('404'))
+        transformItems: items => items.filter(item => !item.url.includes('404'))
     },
     transformPageData(pageData) {
         // Home and the 404 keep the static brand image; every other page gets its own.
-        if (pageData.relativePath !== 'index.md' && !pageData.isNotFound && !isNoindex(pageData.frontmatter)) {
+        if (pageData.relativePath !== 'index.md' && !pageData.isNotFound) {
             ogPages.set(pageData.relativePath, {
                 title: pageData.title,
                 description: pageData.description || description

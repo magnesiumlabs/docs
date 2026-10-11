@@ -1,5 +1,12 @@
 {
     "$schema": "https://openapi.vercel.sh/vercel.json",
     "cleanUrls": true,
-    "buildCommand": "git fetch --unshallow || true; npm run build"
+    "buildCommand": "git fetch --unshallow || true; npm run build",
+    "redirects": [
+        {
+            "source": "/guide/theme",
+            "destination": "/guide/migration",
+            "permanent": true
+        }
+    ]
 }
