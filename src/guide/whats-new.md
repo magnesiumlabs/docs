@@ -43,67 +43,13 @@ Returns a `var()` reference for a token by name, using the configured prefix. Us
 }
 ```
 
-## New: `$layer` on `emit()`
+## New: `$layer` on `emit()` and `theme()`
 
-Wrap any token emission in a named CSS cascade layer with the `$layer` parameter.
+Wrap any token emission in a named CSS cascade layer with the `$layer` parameter. See [`emit()`](./mixins#emit-tokens-namespace-include-exclude-layer).
 
-::: code-group
-```scss
-:root {
-    @include theme.emit($tokens, "color", $layer: "tokens");
-}
-```
+## New: `$selector` and `$layer` on `scheme()`
 
-```css
-@layer tokens {
-    :root {
-        --mg-color-primary: #0071d7;
-    }
-}
-```
-:::
-
-## New: `$selector` on `scheme()`
-
-Scope a color scheme to an explicit CSS selector instead of a `@media` query — useful for user-controlled theme switching.
-
-::: code-group
-```scss
-@include theme.scheme("dark", $selector: "[data-theme='dark']") {
-    --mg-color-primary: #00b2e9;
-}
-```
-
-```css
-[data-theme='dark'] {
-    --mg-color-primary: #00b2e9;
-}
-```
-:::
-
-## New: `$layer` on `scheme()`
-
-Wrap a color scheme — media query or selector — in a named CSS cascade layer with the `$layer` parameter, so light and dark declarations share the same layer.
-
-::: code-group
-```scss
-@include theme.scheme("dark", $layer: "tokens") {
-    :root {
-        --mg-color-primary: darkorange;
-    }
-}
-```
-
-```css
-@layer tokens {
-    @media (prefers-color-scheme: dark) {
-        :root {
-            --mg-color-primary: darkorange;
-        }
-    }
-}
-```
-:::
+Scope a color scheme to an explicit CSS selector instead of a `@media` query — useful for user-controlled theme switching — and wrap it in a named cascade layer so light and dark declarations share the same layer. See [`scheme()`](./mixins#scheme-scheme-selector-layer).
 
 ## New: `$namespace` replaces `$prefix` / `$component`
 

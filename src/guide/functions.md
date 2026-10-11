@@ -13,7 +13,7 @@ Builds a hyphenated, prefixed string from one or more parts. `null` parts are sk
 
 | Parameter | Description             | Default     |
 |-----------|-------------------------|-------------|
-| `$name`   | One or more name parts. | `undefined` |
+| `$name`   | One or more name parts. | —           |
 
 ### Usage
 
@@ -38,7 +38,7 @@ Returns a `var()` expression for a token name, using the configured prefix. Use 
 
 | Parameter | Description      | Default     |
 |-----------|------------------|-------------|
-| `$token`  | The token name.  | `undefined` |
+| `$token`  | The token name.  | —           |
 
 ### Usage
 
@@ -68,7 +68,7 @@ Transforms a tokens map into `var()` references with fallback values. The Sass m
 
 | Parameter    | Description                              | Default     |
 |--------------|------------------------------------------|-------------|
-| `$tokens`    | The tokens map.                          | `undefined` |
+| `$tokens`    | The tokens map.                          | —           |
 | `$namespace` | Namespace to prepend (without prefix).   | `null`      |
 
 ### Usage
@@ -112,8 +112,8 @@ Validates user-provided tokens against a reference schema. Returns `$tokens` unc
 
 | Parameter | Description                                     | Default     |
 |-----------|-------------------------------------------------|-------------|
-| `$refs`   | The reference schema — a map or list of keys.   | `undefined` |
-| `$tokens` | The user-provided tokens map to validate.       | `undefined` |
+| `$refs`   | The reference schema — a map or list of keys.   | —           |
+| `$tokens` | The user-provided tokens map to validate.       | —           |
 
 ### Usage
 
@@ -162,8 +162,8 @@ Returns a `var()` expression for a single token key. Throws `@error` if the toke
 
 | Parameter    | Description                              | Default     |
 |--------------|------------------------------------------|-------------|
-| `$tokens`    | The tokens map.                          | `undefined` |
-| `$token`     | The token key to look up.                | `undefined` |
+| `$tokens`    | The tokens map.                          | —           |
+| `$token`     | The token key to look up.                | —           |
 | `$namespace` | Namespace to prepend (without prefix).   | `null`      |
 | `$fallback`  | Include the token value as CSS fallback. | `false`     |
 

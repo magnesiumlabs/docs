@@ -67,18 +67,22 @@ When both are provided, `$exclude` applies on top of `$include` — a key must b
 
 ::: code-group
 ```scss
-@include theme.emit((
-    "primary": blue,
-    "secondary": coral,
-    "accent": gold,
-    "muted": gray
-), "color", $include: ("primary", "accent", "muted"), $exclude: ("muted",));
+:root {
+    @include theme.emit((
+        "primary": blue,
+        "secondary": coral,
+        "accent": gold,
+        "muted": gray
+    ), "color", $include: ("primary", "accent", "muted"), $exclude: ("muted",));
+}
 ```
 
 ```css
---mg-color-primary: blue;
---mg-color-accent: gold;
-/* "muted" is excluded despite being in $include */
+:root {
+    --mg-color-primary: blue;
+    --mg-color-accent: gold;
+    /* "muted" is excluded despite being in $include */
+}
 ```
 :::
 
@@ -86,13 +90,17 @@ When both are provided, `$exclude` applies on top of `$include` — a key must b
 
 ::: code-group
 ```scss
-@include theme.emit($tokens, "button", $layer: "tokens");
+:root {
+    @include theme.emit($tokens, "button", $layer: "tokens");
+}
 ```
 
 ```css
 @layer tokens {
-    --mg-button-text-color: darkcyan;
-    --mg-button-font-size: 1rem;
+    :root {
+        --mg-button-text-color: darkcyan;
+        --mg-button-font-size: 1rem;
+    }
 }
 ```
 :::
@@ -225,7 +233,7 @@ Scopes content to a color scheme. Without `$selector`, wraps in a `@media (prefe
 ```
 
 ```css
-[data-theme='dark'] {
+[data-theme=dark] {
     --mg-color-primary: darkorange;
 }
 ```
