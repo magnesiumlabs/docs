@@ -226,7 +226,7 @@ export default defineConfig({
         ],
         footer: {
             message: 'Released under the MIT License.',
-            copyright: `Copyright © 2022-${new Date().getFullYear()} <a href="https://frontfactory.dev">Front Factory</a>.`
+            copyright: `Copyright © 2022-${new Date().getFullYear()} <a href="https://frontfactory.dev">Front Factory</a> - <a href="https://damev.in">Boris Damevin</a>.`
         },
         ff: {
             navOrder: 'menu-first',
