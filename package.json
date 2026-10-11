@@ -13,6 +13,8 @@
     "devDependencies": {
         "@commitlint/cli": "^21.2.3",
         "@commitlint/config-conventional": "^21.2.3",
+        "@expo-google-fonts/montserrat": "^0.4.2",
+        "@resvg/resvg-js": "^2.6.2",
         "husky": "^9.1.7"
     },
     "dependencies": {

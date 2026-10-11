@@ -1,0 +1,19 @@
+# Magnesium
+
+> Magnesium is a stateless Sass toolkit that turns Sass maps into scoped, prefixed CSS custom properties, with token validation, cascade layers and color-scheme scoping.
+
+## Docs
+
+- [What is Magnesium?](https://magnesium.dev/guide/what-is-magnesium): the define → emit → consume model
+- [Getting Started](https://magnesium.dev/guide/getting-started): requirements, installation and first usage
+- [Configuration](https://magnesium.dev/guide/configuration): the global `$prefix` option
+- [Functions](https://magnesium.dev/guide/functions): `name()`, `ref()`, `refs()`, `validation()`, `variable()`
+- [Mixins](https://magnesium.dev/guide/mixins): `emit()`, `theme()`, `scheme()`
+- [Patterns](https://magnesium.dev/guide/patterns): token layers, component theming, dark mode, aliasing
+- [What's New in v5](https://magnesium.dev/guide/whats-new)
+- [Migrating from v4](https://magnesium.dev/guide/migration)
+
+## Optional
+
+- [GitHub](https://github.com/magnesiumlabs/magnesium)
+- [Changelog](https://github.com/magnesiumlabs/magnesium/blob/main/CHANGELOG.md)
