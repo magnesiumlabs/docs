@@ -6,6 +6,28 @@ import { generateOgImages, ogImageName, type OgPage } from './og';
 const description = 'Sass toolkit for managing design tokens as CSS custom properties.';
 const hostname = 'https://magnesium.dev';
 const gaId = 'G-FENS3716B9';
+
+// Minor line of the latest published @magnesium/theme ("5.3.x"), read from the npm registry at build
+// time so the nav never goes stale. Falls back to a plain changelog link if the registry is unreachable.
+async function latestMinorLine(): Promise<string | null> {
+    try {
+        const response = await fetch('https://registry.npmjs.org/@magnesium/theme/latest', {
+            signal: AbortSignal.timeout(5000)
+        });
+        const { version } = (await response.json()) as { version?: string };
+        const match = version?.match(/^(\d+)\.(\d+)\./);
+
+        return match ? `${match[1]}.${match[2]}.x` : null;
+    } catch {
+        return null;
+    }
+}
+
+const versionLine = await latestMinorLine();
+const changelog = {
+    text: 'Changelog',
+    link: 'https://github.com/magnesiumlabs/magnesium/blob/main/CHANGELOG.md'
+};
 const ogImage = `${hostname}/og-image.png`;
 const ogImageAlt = 'Magnesium — a Sass toolkit for design tokens';
 // `lastUpdated` and the sitemap's <lastmod> come from git history; a shallow clone flattens them
@@ -153,15 +175,7 @@ gtag('config', '${gaId}');`
                 text: 'Guide',
                 link: '/guide/getting-started'
             },
-            {
-                text: '5.3.x',
-                items: [
-                    {
-                        text: 'Changelog',
-                        link: 'https://github.com/magnesiumlabs/magnesium/blob/main/CHANGELOG.md'
-                    }
-                ]
-            }
+            versionLine ? { text: versionLine, items: [changelog] } : changelog
         ],
         sidebar: [
             {
