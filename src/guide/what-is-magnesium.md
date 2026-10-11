@@ -58,3 +58,10 @@ $tokens: (
 }
 ```
 :::
+
+## Why Magnesium
+
+- **Plain CSS output.** Tokens end up as CSS custom properties: there is no runtime, so they can be overridden from any stylesheet or element.
+- **Stateless.** Nothing is registered or mutated between calls; the namespace is passed explicitly every time. See [Functions](./functions).
+- **Validated at compile time.** `theme()` and `validation()` reject unknown tokens with an error that lists the supported ones, so a typo fails the build instead of silently doing nothing.
+- **Cascade-layer and color-scheme aware.** Wrap emissions in a named `@layer` and scope them to `prefers-color-scheme` or an explicit selector. See [Mixins](./mixins).

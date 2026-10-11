@@ -12,6 +12,10 @@ description: Install Magnesium and emit your first design tokens as CSS custom p
 | Node.js    | `^20.19.0 \|\| >= 22.12.0` |
 | Sass       | `>= 1.97.1`                |
 
+## Browser support
+
+Magnesium outputs plain CSS custom properties, supported by every modern browser. The optional `$layer` parameter relies on [cascade layers](https://developer.mozilla.org/en-US/docs/Web/CSS/@layer): Chrome and Edge 99, Firefox 97, Safari 15.4 and later.
+
 ## Installation
 
 ```bash
@@ -57,6 +61,16 @@ If your toolchain uses the Sass `pkg:` importer (Vite, modern bundlers), use the
 ```
 
 Both forms are equivalent — use whichever your setup requires.
+
+## Sass command line
+
+The Sass CLI does not look inside `node_modules` on its own. Point it there with `--load-path`:
+
+```bash
+sass --load-path=node_modules src/styles.scss dist/styles.css
+```
+
+Without it, compilation fails with `Can't find stylesheet to import`. See [Troubleshooting](./troubleshooting).
 
 ## Coming from v4?
 

@@ -47,6 +47,16 @@ $shape-tokens: (
 ```
 :::
 
+### Layer order
+
+Cascade layers are ordered by where each name first appears in the compiled CSS, not by how often it is used. Magnesium does not emit an order statement, so declare yours once at the top of your entry file:
+
+```scss
+@layer reset, tokens, components;
+```
+
+Otherwise the order follows the first `$layer` Magnesium happens to emit — for instance `base` before `tokens` if `base` is emitted first — and any later emission into an already-seen layer is appended to it.
+
 ## Component theming
 
 The recommended pattern for a themeable component:
@@ -155,12 +165,33 @@ When using `$selector`, emit tokens directly inside the `scheme()` block — do 
 ```
 
 ```css
-[data-theme='dark'] {
+[data-theme=dark] {
     --mg-color-primary: #00b2e9;
     --mg-color-surface: #1a1a1a;
 }
 ```
 :::
+
+### Color scheme and flash of wrong theme
+
+Declare `color-scheme` next to the tokens so form controls and scrollbars follow the theme:
+
+```scss
+@include theme.scheme("dark", $selector: "[data-theme='dark']") {
+    color-scheme: dark;
+    @include theme.emit($dark-tokens, "color");
+}
+```
+
+With a selector-based theme, set the attribute before the first paint, with a small inline script in `<head>`, to avoid a flash of the light theme:
+
+```html
+<script>
+    document.documentElement.dataset.theme =
+        localStorage.getItem('theme') ??
+        (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+</script>
+```
 
 ## Cross-namespace references
 
