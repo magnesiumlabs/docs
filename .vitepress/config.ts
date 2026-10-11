@@ -152,7 +152,7 @@ export default defineConfig({
                 link: '/guide/getting-started'
             },
             {
-                text: '5.2.x',
+                text: '5.3.x',
                 items: [
                     {
                         text: 'Changelog',
