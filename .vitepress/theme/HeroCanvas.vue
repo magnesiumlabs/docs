@@ -25,6 +25,11 @@ const FADE_OUT_TIME = 1000;
 const TOTAL_CYCLE = 3600 + 2000 + HOLD_TIME + FADE_OUT_TIME;
 const STATIC_FRAME_TIME = 3600 + 2000 + HOLD_TIME / 2;
 
+// Drawing happens in a fixed SIZE × SIZE coordinate space; the backing store is scaled to the
+// rendered size and device pixel ratio, so small screens don't pay for pixels they never show.
+const SIZE = 650;
+const MAX_BACKING_SIZE = 900;
+
 const BASE_SIZE = 260;
 const BASE_OFFSET = BASE_SIZE / 2;
 const BASE_RADIUS = 24;
@@ -67,11 +72,35 @@ function getThemeColors() {
 onMounted(() => {
     const canvas = canvasEl.value;
     const ctx = canvas.getContext('2d');
-    const CX = canvas.width / 2;
-    const CY = canvas.height * 0.65;
-    const CONTENT_SCALE = (CONTENT_WIDTH_RATIO * canvas.width) / (BASE_SIZE * Math.SQRT2);
+    const CX = SIZE / 2;
+    const CY = SIZE * 0.65;
+    const CONTENT_SCALE = (CONTENT_WIDTH_RATIO * SIZE) / (BASE_SIZE * Math.SQRT2);
 
-    function draw3DPedestal(colors) {
+    const renderedWidth = canvas.getBoundingClientRect().width || SIZE;
+    const backingScale = Math.min(renderedWidth * (window.devicePixelRatio || 1), MAX_BACKING_SIZE) / SIZE;
+    canvas.width = canvas.height = Math.round(SIZE * backingScale);
+
+    // The pedestal never moves: it is the costliest part (20 stacked fills plus glowing strokes), so
+    // it is painted once per colour scheme into an offscreen canvas and blitted every frame.
+    const pedestalCache = document.createElement('canvas');
+    pedestalCache.width = pedestalCache.height = canvas.width;
+    let pedestalIsDark = null;
+
+    function ensurePedestal(colors) {
+        if (pedestalIsDark === colors.isDark) return;
+
+        const pctx = pedestalCache.getContext('2d');
+        pctx.setTransform(1, 0, 0, 1, 0, 0);
+        pctx.clearRect(0, 0, pedestalCache.width, pedestalCache.height);
+        pctx.scale(backingScale, backingScale);
+        pctx.translate(CX, CY);
+        pctx.scale(CONTENT_SCALE, CONTENT_SCALE);
+        pctx.translate(-CX, -CY);
+        draw3DPedestal(pctx, colors);
+        pedestalIsDark = colors.isDark;
+    }
+
+    function draw3DPedestal(ctx, colors) {
         const baseShape = new Path2D();
         baseShape.roundRect(-BASE_OFFSET, -BASE_OFFSET, BASE_SIZE, BASE_SIZE, BASE_RADIUS);
 
@@ -180,14 +209,17 @@ onMounted(() => {
     function draw(time) {
         const colors = getThemeColors();
 
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ensurePedestal(colors);
 
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(pedestalCache, 0, 0);
+
+        ctx.setTransform(backingScale, 0, 0, backingScale, 0, 0);
         ctx.save();
         ctx.translate(CX, CY);
         ctx.scale(CONTENT_SCALE, CONTENT_SCALE);
         ctx.translate(-CX, -CY);
-
-        draw3DPedestal(colors);
 
         const cycleTime = time % TOTAL_CYCLE;
 
@@ -223,19 +255,29 @@ onMounted(() => {
         rafId = null;
     }
 
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let inView = true;
+
     // Honour the OS "reduce motion" setting live: no looping animation (WCAG 2.2.2), just a still frame.
+    // Otherwise only loop while the canvas is on screen and the tab is visible.
     function sync() {
         stop();
 
         if (reducedMotion.matches) {
             draw(STATIC_FRAME_TIME);
-        } else {
+        } else if (inView && !document.hidden) {
             rafId = requestAnimationFrame(animate);
         }
     }
 
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     reducedMotion.addEventListener('change', sync);
+    document.addEventListener('visibilitychange', sync);
+
+    const observer = new IntersectionObserver(([entry]) => {
+        inView = entry.isIntersecting;
+        sync();
+    });
+    observer.observe(canvas);
 
     // The still frame is not redrawn by the loop, so repaint it when the colour scheme flips.
     const stopThemeWatch = watch(isDark, () => {
@@ -245,6 +287,8 @@ onMounted(() => {
     teardown = () => {
         stop();
         reducedMotion.removeEventListener('change', sync);
+        document.removeEventListener('visibilitychange', sync);
+        observer.disconnect();
         stopThemeWatch();
     };
 
