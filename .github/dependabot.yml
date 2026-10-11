@@ -8,3 +8,16 @@ updates:
       - "borisdamevin"
     reviewers:
       - "borisdamevin"
+    groups:
+      vitepress:
+        patterns:
+          - "vitepress"
+          - "vue"
+          - "@frontfactory/*"
+      tooling:
+        patterns:
+          - "@commitlint/*"
+          - "husky"
+          - "@resvg/*"
+          - "@fontsource*"
+          - "@expo-google-fonts/*"
