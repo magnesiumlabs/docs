@@ -13,7 +13,7 @@ hero:
       text: Get Started
       link: /guide/getting-started
     - theme: alt
-      text: Github
+      text: GitHub
       link: https://github.com/magnesiumlabs/magnesium
 
 features:

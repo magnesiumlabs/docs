@@ -7,6 +7,8 @@ head:
       content: noindex, follow
 ---
 
+# Theme (v4, deprecated)
+
 ::: warning Deprecated
 This page documents the v4 API, removed in v5.
 

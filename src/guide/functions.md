@@ -9,13 +9,13 @@ description: API reference for Magnesium's Sass functions for building prefixed 
 
 Builds a hyphenated, prefixed string from one or more parts. `null` parts are skipped. Returns a plain **string**, not a CSS variable — use `ref()` when you need a `var()` expression.
 
-#### Parameters
+### Parameters
 
 | Parameter | Description             | Default     |
 |-----------|-------------------------|-------------|
 | `$name`   | One or more name parts. | `undefined` |
 
-#### Usage
+### Usage
 
 ```scss
 @use "@magnesium/theme";
@@ -34,13 +34,13 @@ Use `name()` when you need the raw string to build a custom property name progra
 
 Returns a `var()` expression for a token name, using the configured prefix. Use this to reference a token across namespaces without hardcoding the prefix.
 
-#### Parameters
+### Parameters
 
 | Parameter | Description      | Default     |
 |-----------|------------------|-------------|
 | `$token`  | The token name.  | `undefined` |
 
-#### Usage
+### Usage
 
 ::: code-group
 ```scss
@@ -64,14 +64,14 @@ Returns a `var()` expression for a token name, using the configured prefix. Use 
 
 Transforms a tokens map into `var()` references with fallback values. The Sass map structure is preserved — nested maps remain nested, but their keys are joined into hyphenated CSS variable names. `null` values are preserved as-is.
 
-#### Parameters
+### Parameters
 
 | Parameter    | Description                              | Default     |
 |--------------|------------------------------------------|-------------|
 | `$tokens`    | The tokens map.                          | `undefined` |
 | `$namespace` | Namespace to prepend (without prefix).   | `null`      |
 
-#### Usage
+### Usage
 
 ```scss
 @use "@magnesium/theme";
@@ -108,14 +108,14 @@ $refs: theme.refs($tokens, "button");
 
 Validates user-provided tokens against a reference schema. Returns `$tokens` unchanged if valid. Throws `@error` with the list of supported tokens if an unknown key is found.
 
-#### Parameters
+### Parameters
 
 | Parameter | Description                                     | Default     |
 |-----------|-------------------------------------------------|-------------|
 | `$refs`   | The reference schema — a map or list of keys.   | `undefined` |
 | `$tokens` | The user-provided tokens map to validate.       | `undefined` |
 
-#### Usage
+### Usage
 
 ```scss
 @use "@magnesium/theme";
@@ -139,7 +139,7 @@ A list can also be used as `$refs`:
 $refs: ("text-color", "font-size");
 ```
 
-#### Error case
+### Error case
 
 Passing an unsupported token key throws a compile-time error:
 
@@ -158,7 +158,7 @@ $validated: theme.validation($refs, $tokens);
 
 Returns a `var()` expression for a single token key. Throws `@error` if the token is not in the map.
 
-#### Parameters
+### Parameters
 
 | Parameter    | Description                              | Default     |
 |--------------|------------------------------------------|-------------|
@@ -167,7 +167,7 @@ Returns a `var()` expression for a single token key. Throws `@error` if the toke
 | `$namespace` | Namespace to prepend (without prefix).   | `null`      |
 | `$fallback`  | Include the token value as CSS fallback. | `false`     |
 
-#### Usage
+### Usage
 
 ::: code-group
 ```scss

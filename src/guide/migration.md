@@ -15,7 +15,7 @@ v5 is a full rewrite of the API. All functions and mixins have been renamed or r
 
 ## Before / after
 
-**Emitting custom properties**
+### Emitting custom properties
 
 ::: code-group
 ```scss [v4]
@@ -49,7 +49,7 @@ $tokens: (
 ```
 :::
 
-**Referencing a token value**
+### Referencing a token value
 
 ::: code-group
 ```scss [v4]
@@ -65,7 +65,7 @@ $tokens: (
 ```
 :::
 
-**Color scheme scoping**
+### Color scheme scoping
 
 ::: code-group
 ```scss [v4]
@@ -86,7 +86,7 @@ $tokens: (
 ```
 :::
 
-**Configuring the prefix**
+### Configuring the prefix
 
 ::: code-group
 ```scss [v4]

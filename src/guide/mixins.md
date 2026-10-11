@@ -13,7 +13,7 @@ Emits CSS custom property declarations from a tokens map. Nested maps are flatte
 `null` values are **silently skipped** — no custom property is emitted. Falsy values such as `0`, `0px`, or `false` are emitted as-is, since they are valid CSS values.
 :::
 
-#### Parameters
+### Parameters
 
 | Parameter    | Description                                              | Default |
 |--------------|----------------------------------------------------------|---------|
@@ -23,7 +23,7 @@ Emits CSS custom property declarations from a tokens map. Nested maps are flatte
 | `$exclude`   | List of token keys to skip.                              | `null`  |
 | `$layer`     | CSS cascade layer name. Wraps output in `@layer`.        | `null`  |
 
-#### Usage
+### Usage
 
 ::: code-group
 ```scss
@@ -47,7 +47,7 @@ $tokens: (
 ```
 :::
 
-#### Filtering with `$include` / `$exclude`
+### Filtering with `$include` / `$exclude`
 
 ::: code-group
 ```scss
@@ -82,7 +82,7 @@ When both are provided, `$exclude` applies on top of `$include` — a key must b
 ```
 :::
 
-#### Cascade layers with `$layer`
+### Cascade layers with `$layer`
 
 ::: code-group
 ```scss
@@ -97,7 +97,7 @@ When both are provided, `$exclude` applies on top of `$include` — a key must b
 ```
 :::
 
-#### Nested maps
+### Nested maps
 
 ::: code-group
 ```scss
@@ -127,7 +127,7 @@ $tokens: (
 
 Validates user-provided tokens against a reference schema, then emits the custom property declarations in one call. Throws `@error` on unknown tokens. `$include`, `$exclude` and `$layer` behave exactly as in [`emit()`](#emit-tokens-namespace-include-exclude-layer).
 
-#### Parameters
+### Parameters
 
 | Parameter    | Description                                               | Default |
 |--------------|-----------------------------------------------------------|---------|
@@ -138,7 +138,7 @@ Validates user-provided tokens against a reference schema, then emits the custom
 | `$exclude`   | List of token keys to skip.                               | `null`  |
 | `$layer`     | CSS cascade layer name. Wraps output in `@layer`.         | `null`  |
 
-#### Usage
+### Usage
 
 ::: code-group
 ```scss
@@ -161,7 +161,7 @@ $refs: (
 ```
 :::
 
-#### Cascade layer with `$layer`
+### Cascade layer with `$layer`
 
 ::: code-group
 ```scss
@@ -185,7 +185,7 @@ $refs: (
 
 Scopes content to a color scheme. Without `$selector`, wraps in a `@media (prefers-color-scheme)` query. With `$selector`, wraps in a selector rule instead. With `$layer`, wraps the whole output in a named cascade layer.
 
-#### Parameters
+### Parameters
 
 | Parameter   | Description                                                              | Default   |
 |-------------|--------------------------------------------------------------------------|-----------|
@@ -193,7 +193,7 @@ Scopes content to a color scheme. Without `$selector`, wraps in a `@media (prefe
 | `$selector` | A CSS selector to scope content. Bypasses the media query when provided. | `null`    |
 | `$layer`    | CSS cascade layer name. Wraps the whole output in `@layer`.              | `null`    |
 
-#### Usage — media query
+### Usage — media query
 
 ::: code-group
 ```scss
@@ -215,7 +215,7 @@ Scopes content to a color scheme. Without `$selector`, wraps in a `@media (prefe
 ```
 :::
 
-#### Usage — explicit selector
+### Usage — explicit selector
 
 ::: code-group
 ```scss
@@ -231,7 +231,7 @@ Scopes content to a color scheme. Without `$selector`, wraps in a `@media (prefe
 ```
 :::
 
-#### Usage — cascade layer
+### Usage — cascade layer
 
 `$layer` wraps the whole output — media query or selector — in a named layer, so light and dark declarations share the same cascade layer.
 
