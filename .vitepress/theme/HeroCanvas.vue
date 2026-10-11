@@ -5,12 +5,13 @@
  * theme's `home-hero-image` slot so it lives inside the actual hero layout instead of a page of
  * its own.
  */
-import { onMounted, onUnmounted, ref } from 'vue';
+import { onMounted, onUnmounted, ref, watch } from 'vue';
 import { useData } from 'vitepress';
 
 const { isDark } = useData();
 const canvasEl = ref(null);
 let rafId = null;
+let teardown = null;
 
 const STACK_LAYERS = [
     { label: '1. DEFINE', sub: '$tokens map', colorHex: '#00f2fe', delay: 0, duration: 2000 },
@@ -19,8 +20,10 @@ const STACK_LAYERS = [
 ];
 
 const HOLD_TIME = 2200;
+// With reduced motion the illustration is drawn once, frozen mid-hold with all three layers in place.
 const FADE_OUT_TIME = 1000;
 const TOTAL_CYCLE = 3600 + 2000 + HOLD_TIME + FADE_OUT_TIME;
+const STATIC_FRAME_TIME = 3600 + 2000 + HOLD_TIME / 2;
 
 const BASE_SIZE = 260;
 const BASE_OFFSET = BASE_SIZE / 2;
@@ -174,7 +177,7 @@ onMounted(() => {
         ctx.restore();
     }
 
-    function animate(time) {
+    function draw(time) {
         const colors = getThemeColors();
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -208,15 +211,48 @@ onMounted(() => {
         });
 
         ctx.restore();
+    }
 
+    function animate(time) {
+        draw(time);
         rafId = requestAnimationFrame(animate);
     }
 
-    rafId = requestAnimationFrame(animate);
+    function stop() {
+        if (rafId) cancelAnimationFrame(rafId);
+        rafId = null;
+    }
+
+    // Honour the OS "reduce motion" setting live: no looping animation (WCAG 2.2.2), just a still frame.
+    function sync() {
+        stop();
+
+        if (reducedMotion.matches) {
+            draw(STATIC_FRAME_TIME);
+        } else {
+            rafId = requestAnimationFrame(animate);
+        }
+    }
+
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    reducedMotion.addEventListener('change', sync);
+
+    // The still frame is not redrawn by the loop, so repaint it when the colour scheme flips.
+    const stopThemeWatch = watch(isDark, () => {
+        if (reducedMotion.matches) draw(STATIC_FRAME_TIME);
+    });
+
+    teardown = () => {
+        stop();
+        reducedMotion.removeEventListener('change', sync);
+        stopThemeWatch();
+    };
+
+    sync();
 });
 
 onUnmounted(() => {
-    if (rafId) cancelAnimationFrame(rafId);
+    teardown?.();
 });
 </script>
 
