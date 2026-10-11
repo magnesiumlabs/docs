@@ -20,7 +20,7 @@ Node ≥ 20 required.
 
 - `src/` — All Markdown content (VitePress `srcDir`)
   - `index.md` — Home page
-  - `guide/` — Documentation pages (what-is-magnesium, getting-started, configuration, functions, mixins, theme, patterns, migration, whats-new)
+  - `guide/` — Documentation pages (what-is-magnesium, getting-started, configuration, functions, mixins, theme, patterns, migration, whats-new, troubleshooting)
   - `public/` — Static assets (logo, favicon, og-image, robots.txt) copied as-is to build output
 - `.vitepress/config.ts` — Site config: nav, sidebar, theme config
 - `.vitepress/theme/` — Theme customization (extends DefaultTheme, overrides CSS variables)

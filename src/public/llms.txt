@@ -10,6 +10,7 @@
 - [Functions](https://magnesium.dev/guide/functions): `name()`, `ref()`, `refs()`, `validation()`, `variable()`
 - [Mixins](https://magnesium.dev/guide/mixins): `emit()`, `theme()`, `scheme()`
 - [Patterns](https://magnesium.dev/guide/patterns): token layers, component theming, dark mode, aliasing
+- [Troubleshooting](https://magnesium.dev/guide/troubleshooting): common compile errors and fixes
 - [What's New in v5](https://magnesium.dev/guide/whats-new)
 - [Migrating from v4](https://magnesium.dev/guide/migration)
 
