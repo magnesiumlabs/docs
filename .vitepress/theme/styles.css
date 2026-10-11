@@ -13,7 +13,7 @@
     --ff-color-accent-glow: rgb(0 113 215 / 16%);
 
     /* Display font for headings — Montserrat (closest free match to the logo's Gotham-style Pier Sans) */
-    --ff-font-display: 'Montserrat', var(--vp-font-family-base);
+    --ff-font-display: 'Montserrat Variable', var(--vp-font-family-base);
 }
 
 .dark {

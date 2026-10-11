@@ -114,16 +114,8 @@ export default defineConfig({
     },
     head: [
         ['link', { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }],
-        ['link', { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
-        ['link', { rel: 'preconnect', href: 'https://fonts.googleapis.com' }],
-        ['link', { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' }],
-        [
-            'link',
-            {
-                rel: 'stylesheet',
-                href: 'https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap'
-            }
-        ],
+        ['link', { rel: 'icon', type: 'image/x-icon', sizes: '16x16 32x32 48x48', href: '/favicon.ico' }],
+        ['link', { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' }],
         ['meta', { name: 'theme-color', content: '#0071d7' }],
         ['meta', { property: 'og:site_name', content: 'Magnesium' }],
         ['meta', { property: 'og:locale', content: 'en_US' }],
